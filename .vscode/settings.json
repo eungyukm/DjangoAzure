@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/caf8731d-5cd0-4f5e-8d28-3b018de92ad8/microsoft.web/sites/subscriptions/caf8731d-5cd0-4f5e-8d28-3b018de92ad8/resourceGroups/obliy/providers/Microsoft.Web/sites/obliy",
+    "appService.deploySubpath": ".github"
+}
