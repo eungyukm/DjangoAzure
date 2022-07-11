@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from pickle import TRUE
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'relecloud.apps.RelecloudConfig',
+    'user_app.apps.UserAppConfig',
+    'board_app.apps.BoardAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'project.middleware.TopMenuMiddleware.TopMenuMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -74,10 +79,26 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+settings_dir = os.path.dirname(__file__)
+PROJECT_ROOT = os.path.abspath(os.path.dirname(settings_dir))
+SSL_FOLDER = os.path.join(PROJECT_ROOT, 'SSL/DigiCertGlobalRootCA.crt.pem')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 데이터베이스 엔진 명. 그대로...
+        'ENGINE': 'django.db.backends.mysql',
+        # 데터이스 이름. 사전에 데터이스가 생성되어 있어야 한다.
+        'NAME': 'django',
+        # 접속 계정
+        'USER': 'obliy',
+        # 접속 비밀번호
+        'PASSWORD': 'EUNgyu!994',
+        # MySql이 설치된 컴퓨터 IP 혹은 도메인
+        'HOST': 'obliymysql.mysql.database.azure.com',
+        # 포트 번호 (기본 : 3306)
+        'PORT': '3306',
+        'OPTIONS':  {'ssl': {'ca': SSL_FOLDER}},
+
     }
 }
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,22 +58,33 @@
 		<div class="col-sm-6">
 			<div class="card shadow">
 				<div class="card-body">
-					<div class="alert alert-danger">
-						<h3>로그인 실패</h3>
-						<p>아이디 비밀번호를 확인해주세요</p>
-					</div>
-					<form action="index.html" method="post">
+					<form action="board_modify.html" method="post">
 						<div class="form-group">
-							<label for="user_id">아이디</label>
-							<input type="text" id="user_id" name="user_id" class="form-control"/>
+							<label for="board_writer_name">작성자</label>
+							<input type="text" id="board_writer_name" name="board_writer_name" class="form-control" value="홍길동" disabled="disabled"/>
 						</div>
 						<div class="form-group">
-							<label for="user_pw">비밀번호</label>
-							<input type="password" id="user_pw" name="user_pw" class="form-control"/>
+							<label for="board_date">작성날짜</label>
+							<input type="text" id="board_date" name="board_date" class="form-control" value="2018-7-20" disabled="disabled"/>
 						</div>
-						<div class="form-group text-right">
-							<button type="submit" class="btn btn-primary">로그인</button>
-							<a href="join.html" class="btn btn-danger">회원가입</a>
+						<div class="form-group">
+							<label for="board_subject">제목</label>
+							<input type="text" id="board_subject" name="board_subject" class="form-control" value="제목입니다"/>
+						</div>
+						<div class="form-group">
+							<label for="board_content">내용</label>
+							<textarea id="board_content" name="board_content" class="form-control" rows="10" style="resize:none">본문입니다</textarea>
+						</div>
+						<div class="form-group">
+							<label for="board_file">첨부 이미지</label>
+							<img src="image/logo.png" width="100%"/>	
+							<input type="file" name="board_file" id="board_file" class="form-control" accept="image/*"/>					
+						</div>
+						<div class="form-group">
+							<div class="text-right">
+								<button type="submit" class="btn btn-primary">수정완료</button>
+								<a href="board_read.html" class="btn btn-info">취소</a>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -91,14 +101,5 @@
 		<p>사업자번호 : 000-111-222</p>
 	</div>
 </div>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
