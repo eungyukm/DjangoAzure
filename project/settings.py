@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'relecloud.apps.RelecloudConfig',
     'user_app.apps.UserAppConfig',
     'board_app.apps.BoardAppConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
