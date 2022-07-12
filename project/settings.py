@@ -97,8 +97,8 @@ DATABASES = {
         'HOST': 'obliymysql.mysql.database.azure.com',
         # 포트 번호 (기본 : 3306)
         'PORT': '3306',
-        'OPTIONS':  {'ssl': {'ca': SSL_FOLDER}},
-
+        # 'OPTIONS':  {'ssl': {'ca': SSL_FOLDER}},
+        'ssl': {'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
     }
 }
 
