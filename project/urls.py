@@ -18,9 +18,12 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('', include('relecloud.urls')),
     # 사용자 관련
     path('user/', include('user_app.urls')),
     # 게시판 관련
     path('board/', include('board_app.urls')),
+    # 사용자 관련 Rest API
+    path('api/acount/', include('api.urls')),
 ]

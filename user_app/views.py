@@ -103,7 +103,7 @@ def login_result(request):
                     </script>
                     '''
     except:
-        # 아이다가 없는 경우
+        # 아이디가 없는 경우
         message = '''
                      <script>
                         alert('존재하지 않는 id입니다.')
