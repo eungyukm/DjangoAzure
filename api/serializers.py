@@ -26,3 +26,4 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserTable
         ordering = ['created']
+        fields = '__all__'
