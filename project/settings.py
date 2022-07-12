@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-zqb7pt98%jmk=o6zx@_ncr62cc3-az9jiqv$g)rif5%=5&16)x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['obliy.azurewebsites.net']
+AZURE_HOST = 'obliy.azurewebsites.net'
+ALLOWED_HOSTS = [AZURE_HOST]
 
 #
 # Application definition
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'project', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,7 +99,6 @@ DATABASES = {
         # 포트 번호 (기본 : 3306)
         'PORT': '3306',
         # 'OPTIONS':  {'ssl': {'ca': SSL_FOLDER}},
-        'ssl': {'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
     }
 }
 

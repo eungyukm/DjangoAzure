@@ -1,6 +1,6 @@
 <!-- 상단 메뉴 부분 -->
 <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top shadow-lg">
-	<a class="navbar-brand" href="index.html">SoftCampus</a>
+	<a class="navbar-brand" href="/">SoftCampus</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 	        data-target="#navMenu">
 		<span class="navbar-toggler-icon"></span>        
@@ -15,18 +15,21 @@
 		</ul>
 		
 		<ul class="navbar-nav ml-auto">
+			{% if request.session.login_chk == True%}
 			<li class="nav-item">
-				<a href="login.html" class="nav-link">로그인</a>
+				<a href="/user/modify_user" class="nav-link">정보수정</a>
 			</li>
 			<li class="nav-item">
-				<a href="join.html" class="nav-link">회원가입</a>
+				<a href="/user/logout" class="nav-link">로그아웃</a>
+			</li>
+			{% else %}
+			<li class="nav-item">
+				<a href="/user/login" class="nav-link">로그인</a>
 			</li>
 			<li class="nav-item">
-				<a href="modify_user.html" class="nav-link">정보수정</a>
+				<a href="/user/join" class="nav-link">회원가입</a>
 			</li>
-			<li class="nav-item">
-				<a href="index.html" class="nav-link">로그아웃</a>
-			</li>
+			{% endif %}
 		</ul>
 	</div>
 </nav>
