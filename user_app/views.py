@@ -127,3 +127,41 @@ def logout(request):
             '''
 
     return HttpResponse(message)
+
+
+def modify_user(request):
+
+    # 로그인한 사용자의 정보를 가져옵니다.
+    login_user_idx = request.session['login_user_idx']
+    login_user_model = user_app.models.UserTable.objects.get(
+        user_idx=login_user_idx)
+    # print(login_user_model)
+
+    render_data = {
+        'login_user_data': login_user_model
+    }
+
+    template = loader.get_template('modify_user.html')
+    return HttpResponse(template.render(render_data, request))
+
+
+@csrf_exempt
+def modify_user_result(request):
+    user_pw = request.POST['user_pw']
+    # 로그인한 사용자 번호
+    login_user_idx = request.session['login_user_idx']
+
+    # 로그인한 사용자 정보를 가져옵니다.
+    login_user_model = user_app.models.UserTable.objects.get(
+        user_idx=login_user_idx)
+    # 새로운 정보를 수정
+    login_user_model.user_pw = user_pw
+    login_user_model.save()
+
+    message = '''
+            <script>
+                alert('수정되었습니다')
+                location.href = '/user/modify_user'
+            </script>
+            '''
+    return HttpResponse(message)
