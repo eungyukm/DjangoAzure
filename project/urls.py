@@ -25,5 +25,5 @@ urlpatterns = [
     # 게시판 관련
     path('board/', include('board_app.urls')),
     # 사용자 관련 Rest API
-    path('api/acount/', include('api.urls')),
+    path('api/account/', include('api.urls')),
 ]
