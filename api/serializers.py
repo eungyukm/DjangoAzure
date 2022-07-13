@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             'user_name', instance.user_name)
         instance.user_id = validated_data.get('user_id', instance.user_id)
         instance.user_pw = validated_data.get('user_pw', instance.user_pw)
-        instance.save()
+        # instance.save()
         return instance
 
     class Meta:

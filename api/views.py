@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .serializers import UserSerializer
 import user_app.models
+from rest_framework.parsers import JSONParser
 
 
 @api_view(['GET'])
@@ -21,7 +22,13 @@ def postData(request):
 def api_login_view(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        user_model = user_app.models.UserTable.objects.get(
+            user_id=serializer.user_id)
+        print(user_model)
+        # user_id = serializer.user_id.label
+        # user_pw = serializer.user_pw
+        # print(user_id)
+        # print(user_pw)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -29,15 +36,10 @@ def api_login_view(request):
 @api_view(['POST'])
 def api_login_result(request):
     # 사용자가 입력한 파라미터를 추출합니다.
-    user_id = request.POST['user_id']
-    user_pw = request.POST['user_pw']
-
+    user_id = request.data['user_id']
+    user_pw = request.data['user_pw']
     print(user_id)
     print(user_pw)
-
-    # 데이터 베이스에서 사용자 데이터를 가져옵니다.
-    # 데이터를 가져올 때 조건에 만족하는 것이 없으면 오류가 발생합니다.
-    # 데이터가 없을 때의 처리르 해야 한다면 예외처리를 통해 처리합니다.
     try:
         user_model = user_app.models.UserTable.objects.get(user_id=user_id)
         # print(user_model)
