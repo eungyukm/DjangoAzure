@@ -7,4 +7,6 @@ urlpatterns = [
 
     # 로그인
     path('login', views.api_login_view),
+    # 로그인 확인
+    path('login_result', views.api_login_result),
 ]
