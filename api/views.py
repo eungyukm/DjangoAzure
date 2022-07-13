@@ -4,6 +4,7 @@ from rest_framework import status
 from .serializers import UserSerializer
 import user_app.models
 from rest_framework.parsers import JSONParser
+import json
 
 
 @api_view(['GET'])
@@ -22,13 +23,6 @@ def postData(request):
 def api_login_view(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-        user_model = user_app.models.UserTable.objects.get(
-            user_id=serializer.user_id)
-        print(user_model)
-        # user_id = serializer.user_id.label
-        # user_pw = serializer.user_pw
-        # print(user_id)
-        # print(user_pw)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -36,8 +30,11 @@ def api_login_view(request):
 @api_view(['POST'])
 def api_login_result(request):
     # 사용자가 입력한 파라미터를 추출합니다.
-    user_id = request.data['user_id']
-    user_pw = request.data['user_pw']
+    body = json.loads(request.body)
+    print(body)
+    print(request.data)
+    user_id = body['user_id']
+    user_pw = body['user_pw']
     print(user_id)
     print(user_pw)
     try:
