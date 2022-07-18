@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'relecloud.apps.RelecloudConfig',
     'user_app.apps.UserAppConfig',
     'board_app.apps.BoardAppConfig',
+    'map_app.apps.MapAppConfig',
     'rest_framework',
 ]
 
@@ -84,6 +85,8 @@ WSGI_APPLICATION = 'project.wsgi.application'
 settings_dir = os.path.dirname(__file__)
 PROJECT_ROOT = os.path.abspath(os.path.dirname(settings_dir))
 SSL_FOLDER = os.path.join(PROJECT_ROOT, 'SSL/DigiCertGlobalRootCA.crt.pem')
+MEDIA_URL = '/upload/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
 
 DATABASES = {
     'default': {
