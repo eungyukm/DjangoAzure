@@ -148,6 +148,7 @@ def modify_user(request):
 @csrf_exempt
 def modify_user_result(request):
     user_pw = request.POST['user_pw']
+    user_name = request.POST['user_name']
     # 로그인한 사용자 번호
     login_user_idx = request.session['login_user_idx']
 
@@ -156,6 +157,7 @@ def modify_user_result(request):
         user_idx=login_user_idx)
     # 새로운 정보를 수정
     login_user_model.user_pw = user_pw
+    login_user_model.user_name = user_name
     login_user_model.save()
 
     message = '''
