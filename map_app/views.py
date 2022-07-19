@@ -219,8 +219,8 @@ def map_write_result(request):
 
     message = f'''
             <script>
-                alert('수정되었습니다')
-                location.href = '/map/map_read?map_info_idx={map_info_idx}&map_data_idx={map_model2.map_data_idx}'
+                alert('저장되었습니다')
+                location.href = '/map/map_read?map_info_idx={map_info_idx}&map_data_idx={map_model2.map_data_idx}&page_num=1'
             </script>
             '''
     return HttpResponse(message)
