@@ -9,7 +9,7 @@
 		<ul class="navbar-nav">
 			{% for menu in request.menu_list %}
 			<li class="nav-item">
-				<a href="/map/map_main?map_info_idx={{menu.board_info_idx}}" class="nav-link">{{menu.board_info_name}}</a>
+				<a href="/map/map_main?map_info_idx={{menu.map_info_idx}}" class="nav-link">{{menu.map_info_name}}</a>
 			</li>
 			{% endfor %}
 		</ul>
