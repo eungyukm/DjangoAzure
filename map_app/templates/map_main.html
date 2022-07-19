@@ -33,7 +33,7 @@
 					{% for m1 in map_data_list%}
 					<tr>
 						<td class="text-center d-none d-md-table-cell">{{m1.map_data_idx}}</td>
-						<td><a href='/map/map_read?map_info_idx={{map_info_idx}}&map_data_idx={{m1.map_data_idx}}'>{{m1.map_data_subject}}</a></td>
+						<td><a href='/map/map_read?map_info_idx={{map_info_idx}}&map_data_idx={{m1.map_data_idx}}&page_num={{page_num}}'>{{m1.map_data_subject}}</a></td>
 						<td class="text-center d-none d-md-table-cell">{{m1.map_data_writer_idx.user_name}}</td>
 						<td class="text-center d-none d-md-table-cell">{{m1.map_data_date|date:'Y-m-d'}}</td>
 						

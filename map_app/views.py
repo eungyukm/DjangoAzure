@@ -90,12 +90,60 @@ def map_main(request):
 
 
 def map_modify(request):
+    # 파라미터 데이터를 추출합니다.
+    map_info_idx = request.GET['map_info_idx']
+    map_data_idx = request.GET['map_data_idx']
+    page_num = request.GET['page_num']
+
+    # 현재 글 정보를 가져옵니다.
+    map_model = map_app.models.MapDataTable.objects
+    map_model = map_model.select_related('map_data_writer_idx', 'map_info_idx')
+    map_model = map_model.get(map_data_idx=map_data_idx)
+
     template = loader.get_template('map_modify.html')
     render_data = {
-
+        'map_info_idx': map_info_idx,
+        'map_data_idx': map_data_idx,
+        'page_num': page_num,
+        'map_model': map_model,
     }
     return HttpResponse(template.render(render_data, request))
 
+
+@csrf_exempt
+def map_modify_result(request):
+    # 파라메터 추출
+    map_info_idx = request.POST['map_info_idx']
+    print("map_info_idx" + map_info_idx)
+    map_data_idx = request.POST['map_data_idx']
+    map_data_subject = request.POST['map_data_subject']
+    map_data_text = request.POST['map_data_content']
+    page_num = request.POST['page_num']
+
+    map_data_file = request.FILES.get('map_data_file')
+
+    # 수정하고자 하는 글 정보를 가져옵니다.
+    map_model = map_app.models.MapDataTable.objects.get(
+        map_data_idx=map_data_idx)
+
+    # 정보를 세팅합니다.
+    map_model.map_data_subject = map_data_subject
+    map_model.map_data_text = map_data_text
+
+    if map_data_file:
+        map_model.map_data_file = map_data_file
+
+    # 저장합니다.
+    map_model.save()
+
+    message = f'''
+            <script>
+                alert('수정되었습니다')
+                location.href = '/map/map_modify?map_info_idx={map_info_idx}&page_num={page_num}&map_data_idx={map_data_idx}'
+            </script>
+            '''
+
+    return HttpResponse(message)
 # board/board_read
 
 
@@ -107,6 +155,8 @@ def map_read(request):
     print(map_info_idx)
     map_data_idx = request.GET['map_data_idx']
     print(map_data_idx)
+    page_num = request.GET['page_num']
+    print(page_num)
 
     # 현재 글 정보를 가져옵니다.
     # 외래키 관계로 묶여 있으므로 select_related 함수를 사용합니다.
@@ -119,6 +169,7 @@ def map_read(request):
         'map_data': map_model,
         'map_info_idx': map_info_idx,
         'map_data_idx': map_data_idx,
+        'page_num': page_num,
     }
     return HttpResponse(template.render(render_data, request))
 
@@ -172,5 +223,23 @@ def map_write_result(request):
                 location.href = '/map/map_read?map_info_idx={map_info_idx}&map_data_idx={map_model2.map_data_idx}'
             </script>
             '''
-    print('실행!!')
+    return HttpResponse(message)
+
+
+def map_delete(request):
+    # 파라미터를 추출합니다.
+    map_info_idx = request.GET['map_info_idx']
+    map_data_idx = request.GET['map_data_idx']
+
+    # 삭제
+    query = map_app.models.MapDataTable.objects.get(map_data_idx=map_data_idx)
+    query.delete()
+
+    message = f'''
+        <script>
+            alert('삭제되었습니다')
+            location.href = '/map/map_main?map_info_idx={map_info_idx}'
+        </script>
+         '''
+
     return HttpResponse(message)

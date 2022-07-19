@@ -46,9 +46,9 @@
 					{% endif %}
 					<div class="form-group">
 						<div class="text-right">
-							<a href="board_main.html" class="btn btn-primary">목록보기</a>
-							<a href="board_modify.html" class="btn btn-info">수정하기</a>
-							<a href="board_main.html" class="btn btn-danger">삭제하기</a>
+							<a href="/map/map_main?map_info_idx={{map_info_idx}}&map_data_idx={{map_data_idx}}&page_num={{page_num}}" class="btn btn-primary">목록보기</a>
+							<a href="/map/map_modify?map_info_idx={{map_info_idx}}&map_data_idx={{map_data_idx}}&page_num={{page_num}}" class="btn btn-info">수정하기</a>
+							<a href="/map/map_delete?map_info_idx={{map_info_idx}}&map_data_idx={{map_data_idx}}&page_num={{page_num}}" class="btn btn-danger">삭제하기</a>
 						</div>
 					</div>
 				</div>
