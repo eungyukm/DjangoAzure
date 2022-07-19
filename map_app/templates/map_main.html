@@ -20,7 +20,7 @@
 	<div class="card shadow">
 		<div class="card-body">
 			<h4 class="card-title">{{map_data.mapp_info_name}}</h4>
-			<table class="table table-hover" id='board_list'>
+			<table class="table table-hover" id='map_data_list'>
 				<thead>
 					<tr>
 						<th class="text-center d-none d-md-table-cell">글번호</th>
@@ -30,117 +30,50 @@
 					</tr>
 				</thead>
 				<tbody>
+					{% for m1 in map_data_list%}
 					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
+						<td class="text-center d-none d-md-table-cell">{{m1.map_data_idx}}</td>
+						<td><a href='/map/map_read?map_info_idx={{map_info_idx}}&map_data_idx={{m1.map_data_idx}}'>{{m1.map_data_subject}}</a></td>
+						<td class="text-center d-none d-md-table-cell">{{m1.map_data_writer_idx.user_name}}</td>
+						<td class="text-center d-none d-md-table-cell">{{m1.map_data_date|date:'Y-m-d'}}</td>
 						
 					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
-					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
-						<td><a href='board_read.html'>글 제목 입니다</a></td>
-						<td class="text-center d-none d-md-table-cell">홍길동</td>
-						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
-						
-					</tr>
+					{% endfor %}
 				</tbody>
 			</table>
 			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">
-					<li class="page-item">
-						<a href="#" class="page-link">이전</a>
+					{% if page_prev == 0 %}
+					<li class="page-item disabled">
+						<a href="/map/map_main?map_info_idx={{map_info_idx}}&page_num={{page_prev}}" class="page-link">이전</a>
 					</li>
+					{% else %}
 					<li class="page-item">
-						<a href="#" class="page-link">1</a>
+						<a href="/map/map_main?map_info_idx={{map_info_idx}}&page_num={{page_prev}}" class="page-link">이전</a>
 					</li>
+					{% endif %}
+					{% for idx in pagenation_data %}
+					{% if page_num == idx %}
+					<li class="page-item active">
+					 <a href="/map/map_main?map_info_idx={{map_info_idx}}&page_num={{idx}}" class="page-link">{{idx}}</a>
+					</li>
+					{% else %}
 					<li class="page-item">
-						<a href="#" class="page-link">2</a>
+						<a href="/map/map_main?map_info_idx={{map_info_idx}}&page_num={{idx}}" class="page-link">{{idx}}</a>
 					</li>
+					{% endif %}
+					{% endfor %}
+
+					{% if page_next == page_num %}
+					<li class="page-item disabled">
+						<a href="/map/map_main?map_info_idx={{map_info_idx}}&page_num={{page_next}}" class="page-link">다음</a>
+					</li>
+					{% else %}
 					<li class="page-item">
-						<a href="#" class="page-link">3</a>
+						<a href="/map/map_main?map_info_idx={{map_info_idx}}&page_num={{page_next}}" class="page-link">다음</a>
 					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">4</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">5</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">6</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">7</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">8</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">9</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">10</a>
-					</li>
-					<li class="page-item">
-						<a href="#" class="page-link">다음</a>
-					</li>
+					{% endif %}
 				</ul>
 			</div>
 			
