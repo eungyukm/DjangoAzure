@@ -28,7 +28,7 @@ class LoginCheckMiddleware:
 
         # 현재 페이지의 주소를 가져온다.
         now_name = resolve(request.path_info).url_name
-        # print(now_name)
+        print(now_name)
 
         # 제외 목록에 포함되어 있지 않을 경우
         if now_name not in except_list:
