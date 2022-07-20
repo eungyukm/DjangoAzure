@@ -31,16 +31,16 @@ class LoginCheckMiddleware:
         print(now_name)
 
         # 제외 목록에 포함되어 있지 않을 경우
-        if now_name not in except_list:
-            # 로그인을 안했는지...
-            if request.session.get('login_chk') != True:
-                r1 = '''
-                    <script>
-                        alert('잘못된 접근 입니다')
-                        location.href = '/'
-                    </script>
-                     '''
-                return HttpResponse(r1)
+        # if now_name not in except_list:
+        #     # 로그인을 안했는지...
+        #     if request.session.get('login_chk') != True:
+        #         r1 = '''
+        #             <script>
+        #                 alert('잘못된 접근 입니다')
+        #                 location.href = '/'
+        #             </script>
+        #              '''
+        #         return HttpResponse(r1)
 
     # 응답정보 처리를 하기 위해 호출하는 함수
     # 응답결과를 생성하는 작업을 수행. 요청 흐름을 통제하는 역할을 수행한다.
