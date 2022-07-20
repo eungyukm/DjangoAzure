@@ -30,4 +30,5 @@ urlpatterns = [
     path('map/', include('map_app.urls')),
     # 사용자 관련 Rest API
     path('api/account/', include('api.urls')),
+    path('api/', include('api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

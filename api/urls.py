@@ -9,4 +9,7 @@ urlpatterns = [
     path('login', views.api_login_view),
     # 로그인 확인
     path('login_result', views.api_login_result),
+
+    # 맵 등록
+    path('map_create', views.api_map_create),
 ]

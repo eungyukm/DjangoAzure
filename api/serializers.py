@@ -1,5 +1,7 @@
+from pkg_resources import require
 from rest_framework import serializers
 from user_app.models import UserTable
+from map_app.models import MapDataTable
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,5 +27,24 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserTable
+        ordering = ['created']
+        fields = '__all__'
+
+
+class MapDataSerializer(serializers.ModelSerializer):
+    map_data_subject = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+    map_data_text = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+    map_data_writer_idx = serializers.IntegerField(required=True)
+    map_info_idx = serializers.IntegerField(required=True)
+    map_data_date = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+
+    def create(self, validated_data):
+        return MapDataTable.objects.create(**validated_data)
+
+    class Meta:
+        model = MapDataTable
         ordering = ['created']
         fields = '__all__'

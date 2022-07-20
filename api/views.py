@@ -4,7 +4,9 @@ from rest_framework import status
 from .serializers import UserSerializer
 import user_app.models
 from rest_framework.parsers import JSONParser
+from django.utils import timezone
 import json
+import map_app.models
 
 
 @api_view(['GET'])
@@ -54,3 +56,39 @@ def api_login_result(request):
         # 아이디가 없는 경우
         res_message = '220'
         return Response(res_message, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def api_map_create(request):
+    body = json.loads(request.body)
+
+    map_data_subject = body['map_data_subject']
+    print(map_data_subject)
+    map_data_text = body['map_data_text']
+    print(map_data_text)
+    map_data_writer_idx = body['map_data_writer_idx']
+    print(map_data_writer_idx)
+    map_info_idx = body['map_info_idx']
+    print(map_info_idx)
+    map_data_date = timezone.localtime()
+
+    map_model = map_app.models.MapDataTable()
+    map_model.map_data_subject = map_data_subject
+    map_model.map_data_text = map_data_text
+    map_model.map_data_date = map_data_date
+
+    map_data_writer_model = user_app.models.UserTable.objects.get(
+        user_idx=map_data_writer_idx)
+    map_info_model = map_app.models.MapInfoTable.objects.get(
+        map_info_idx=map_info_idx)
+
+    map_model.map_data_writer_idx = map_data_writer_model
+    map_model.map_info_idx = map_info_model
+
+    # 업로드된 파일 명을 가져옵니다.
+    # map_model.map_data_file = request.FILES.get('map_file')
+
+    map_model.save()
+
+    res_message = '200'
+    return Response(res_message, status=status.HTTP_200_OK)
