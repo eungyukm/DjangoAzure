@@ -12,4 +12,7 @@ urlpatterns = [
 
     # 맵 등록
     path('map_create', views.api_map_create),
+
+    # 맵 조회
+    path('map_select', views.api_map_select),
 ]
