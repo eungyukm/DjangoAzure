@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-zqb7pt98%jmk=o6zx@_ncr62cc3-az9jiqv$g)rif5%=5&16)x
 DEBUG = True
 
 AZURE_HOST = 'obliy.azurewebsites.net'
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [AZURE_HOST]
 
 #
 # Application definition
