@@ -53,6 +53,12 @@ class MapDataSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     device_name = serializers.CharField(
         required=False, allow_blank=True, max_length=100)
+    profile_count = serializers.IntegerField(required=True)
+    scene_name = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+    project_name = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+    
     date = serializers.CharField(
         required=False, allow_blank=True, max_length=100)
     fps = serializers.FloatField(required=True)

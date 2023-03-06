@@ -161,9 +161,12 @@ def api_map_select(request):
 def api_profile_result(request):
     # 사용자가 입력한 파라미터를 추출합니다.
     body = json.loads(request.body)
-    print(body)
-    print(request.data)
+    # print(body)
+    # print(request.data)
     device_name = body['device_name']
+    profile_count = body['profile_count']
+    scene_name = body['scene_name']
+    project_name = body['project_name']
     fps = body['fps']
     min_fps = body['min_fps']
     avg_fps = body['avg_fps']
@@ -179,11 +182,14 @@ def api_profile_result(request):
     mesh_memory = body['mesh_memory']
     date = body['date']
 
-    print(fps)
-    print(min_fps)
+    # print(fps)
+    # print(min_fps)
 
     profile_data = unityprofile.models.ProfileData()
     profile_data.device_name = device_name
+    profile_data.profile_count = profile_count
+    profile_data.scene_name = scene_name
+    profile_data.project_name = project_name
     profile_data.date = date
 
     profile_data.fps = fps
