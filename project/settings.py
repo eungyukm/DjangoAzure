@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'user_app.apps.UserAppConfig',
     'board_app.apps.BoardAppConfig',
     'map_app.apps.MapAppConfig',
+    'unityprofile.apps.UnityprofileConfig',
     'rest_framework',
 ]
 

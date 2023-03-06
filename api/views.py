@@ -7,6 +7,7 @@ from rest_framework.parsers import JSONParser
 from django.utils import timezone
 import json
 import map_app.models
+import unityprofile.models
 from django.http import JsonResponse
 
 
@@ -162,24 +163,64 @@ def api_profile_result(request):
     body = json.loads(request.body)
     print(body)
     print(request.data)
-    user_id = body['user_id']
-    user_pw = body['user_pw']
-    print(user_id)
-    print(user_pw)
-    try:
-        user_model = user_app.models.UserTable.objects.get(user_id=user_id)
-        # print(user_model)
+    device_name = body['device_name']
+    fps = body['fps']
+    min_fps = body['min_fps']
+    avg_fps = body['avg_fps']
+    max_fps = body['max_fps']
+    set_pass_call = body['set_pass_call']
+    draw_call = body['draw_call']
+    tris = body['tris']
+    vertices = body['vertices']
 
-        # 로그인한 사용자와 데이터베이스에서 가져온 데이터의 비밀번호가 같을 경우
-        if user_pw == user_model.user_pw:
-            # 로그인에 성공할 경우 세셔에 로그인 여부값을 저장합니다.
-            res_message = '200'
-            return Response(res_message, status=status.HTTP_200_OK)
-        # 비밀번호가 다를 경우
-        else:
-            res_message = '210'
-            return Response(res_message, status=status.HTTP_200_OK)
-    except:
-        # 아이디가 없는 경우
-        res_message = '220'
-        return Response(res_message, status=status.HTTP_200_OK)
+    total_memory = body['total_momory']
+    system_memory = body['system_memory']
+    texture_memory = body['texture_memory']
+    mesh_memory = body['mesh_memory']
+    date = body['date']
+
+    print(fps)
+    print(min_fps)
+
+    profile_data = unityprofile.models.ProfileData()
+    profile_data.device_name = device_name
+    profile_data.date = date
+
+    profile_data.fps = fps
+    profile_data.min_fps = min_fps
+    profile_data.avg_fps = avg_fps
+    profile_data.max_fps = max_fps
+
+    profile_data.set_pass_call = set_pass_call
+    profile_data.draw_call = draw_call
+    profile_data.tris = tris
+    profile_data.vertices = vertices
+
+    profile_data.total_memory = total_memory
+    profile_data.system_memory = system_memory
+    profile_data.texture_memory = texture_memory
+    profile_data.mesh_memory = mesh_memory
+
+    profile_data.save()
+
+
+    # try:
+    #     user_model = user_app.models.UserTable.objects.get(user_id=user_id)
+    #     # print(user_model)
+
+    #     # 로그인한 사용자와 데이터베이스에서 가져온 데이터의 비밀번호가 같을 경우
+    #     if user_pw == user_model.user_pw:
+    #         # 로그인에 성공할 경우 세셔에 로그인 여부값을 저장합니다.
+    #         res_message = '200'
+    #         return Response(res_message, status=status.HTTP_200_OK)
+    #     # 비밀번호가 다를 경우
+    #     else:
+    #         res_message = '210'
+    #         return Response(res_message, status=status.HTTP_200_OK)
+    # except:
+    #     # 아이디가 없는 경우
+    #     res_message = '220'
+    #     return Response(res_message, status=status.HTTP_200_OK)
+
+    res_message = '200'
+    return Response(res_message, status=status.HTTP_200_OK)
