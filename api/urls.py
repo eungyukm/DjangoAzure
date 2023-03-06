@@ -15,4 +15,7 @@ urlpatterns = [
 
     # 맵 조회
     path('map_select', views.api_map_select),
+
+    # 프로 파일 데이터 저장
+    path('profile', views.api_profile_result),
 ]
