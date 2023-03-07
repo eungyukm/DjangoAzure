@@ -185,7 +185,11 @@ def api_profile_result(request):
     # print(fps)
     # print(min_fps)
 
-    profile_data = unityprofile.models.ProfileData()
+    if device_name == 'Galaxy S10':
+        profile_data = unityprofile.models.GalaxyS10ProfileData()
+    else:
+        profile_data = unityprofile.models.ProfileData()
+        
     profile_data.device_name = device_name
     profile_data.profile_count = profile_count
     profile_data.scene_name = scene_name
@@ -206,6 +210,8 @@ def api_profile_result(request):
     profile_data.system_memory = system_memory
     profile_data.texture_memory = texture_memory
     profile_data.mesh_memory = mesh_memory
+
+    
 
     profile_data.save()
 
