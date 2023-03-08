@@ -1,7 +1,7 @@
 from unityprofile.models import GalaxyS10ProfileData
 from django.shortcuts import render, HttpResponse
 from django.template import loader
-from unityprofile.models import GalaxyS10ProfileData, GalaxyS9ProfileData, GalaxyS8ProfileData
+from unityprofile.models import GalaxyS10ProfileData, GalaxyS9ProfileData, GalaxyS8ProfileData, IPhone11ProfileData
 from unityprofile.models import GalaxyS10ProfileDataTable
 from prettytable import PrettyTable
 
@@ -64,6 +64,23 @@ def galaxys8profiledatatable(requeset):
 
     render_data = {
         'device' : 'GalaxyS8',
+        'content_list': content_list,
+    }
+
+    template = loader.get_template('profile.html')
+    return HttpResponse(template.render(render_data, requeset))
+
+# 아이폰
+def IPhone11profiledatatable(requeset):
+    queryset = IPhone11ProfileData.objects.order_by('-profile_idx')[:10]
+    
+    content_list =[]
+    for q1 in queryset:
+        # 리스트에 담는다.
+        content_list.append(q1)
+
+    render_data = {
+        'device' : 'IPhone11',
         'content_list': content_list,
     }
 
