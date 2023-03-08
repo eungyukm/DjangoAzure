@@ -187,6 +187,8 @@ def api_profile_result(request):
 
     if device_name == 'Galaxy S10':
         profile_data = unityprofile.models.GalaxyS10ProfileData()
+    elif device_name == 'Galaxy S9':
+        profile_data = unityprofile.models.GalaxyS9ProfileData()
     elif device_name == 'Galaxy S8':
         profile_data = unityprofile.models.GalaxyS8ProfileData()
     else:
