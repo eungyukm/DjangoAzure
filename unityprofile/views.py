@@ -86,3 +86,10 @@ def IPhone11profiledatatable(requeset):
 
     template = loader.get_template('profile.html')
     return HttpResponse(template.render(render_data, requeset))
+
+# FPS Line Chart
+def FPSLineChart(request):
+    galaxys10 = GalaxyS10ProfileData.objects.order_by('-profile_idx')[:10]
+    galaxys9 = GalaxyS9ProfileData.objects.order_by('-profile_idx')[:10]
+    galaxys8 = GalaxyS8ProfileData.objects.order_by('-profile_idx')[:10]
+    iphone11 = IPhone11ProfileData.objects.order_by('-profile_idx')[:10]
