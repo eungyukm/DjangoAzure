@@ -270,14 +270,8 @@ def api_warning_profile_result(request):
     # print(fps)
     # print(min_fps)
 
-    if device_name == 'Galaxy S10':
-        profile_data = unityprofile.models.GalaxyS10ProfileData()
-    elif device_name == 'Galaxy S9':
-        profile_data = unityprofile.models.GalaxyS9ProfileData()
-    elif device_name == 'Galaxy S8':
-        profile_data = unityprofile.models.GalaxyS8ProfileData()
-    else:
-        profile_data = unityprofile.models.ProfileData()
+
+    profile_data = unityprofile.models.WarningProfileData()
 
     profile_data.device_name = device_name
     profile_data.profile_count = profile_count
