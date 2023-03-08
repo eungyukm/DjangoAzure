@@ -3,9 +3,8 @@ from rest_framework import serializers
 from user_app.models import UserTable
 from map_app.models import MapDataTable
 from unityprofile.models import ProfileData, WarningProfileData
-from unityprofile.models import GalaxyS10ProfileData
-from unityprofile.models import GalaxyS8ProfileData
-from unityprofile.models import GalaxyS9ProfileData
+from unityprofile.models import GalaxyS10ProfileData, GalaxyS8ProfileData, GalaxyS9ProfileData
+from unityprofile.models import IPhone11ProfileData
 
 class UserSerializer(serializers.ModelSerializer):
     # user_idx = serializers.IntegerField(read_only=True)
@@ -181,6 +180,39 @@ class GalaxyS9ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GalaxyS9ProfileData
+        ordering = ['created']
+        fields = '__all__'
+
+class IPhone11ProfileSerializer(serializers.ModelSerializer):
+    device_name = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+    profile_count = serializers.IntegerField(required=True)
+    scene_name = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+    project_name = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+    
+    date = serializers.CharField(
+        required=False, allow_blank=True, max_length=100)
+    fps = serializers.FloatField(required=True)
+    min_fps = serializers.FloatField(required=True)
+    avg_fps = serializers.FloatField(required=True)
+    max_fps  = serializers.FloatField(required=True)
+    set_pass_call = serializers.FloatField(required=True)
+    draw_call = serializers.FloatField(required=True)
+    tris = serializers.FloatField(required=True)
+    vertices = serializers.FloatField(required=True)
+
+    total_memory = serializers.FloatField(required=True)
+    system_memory = serializers.FloatField(required=True)
+    texture_memory = serializers.FloatField(required=True)
+    mesh_memory = serializers.FloatField(required=True)
+
+    def create(self, validated_data):
+        return ProfileSerializer.objects.create(**validated_data)
+
+    class Meta:
+        model = IPhone11ProfileData
         ordering = ['created']
         fields = '__all__'
 

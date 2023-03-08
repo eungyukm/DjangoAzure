@@ -34,9 +34,9 @@
 </div> {% endcomment %}
 
 <!-- 게시판 미리보기 부분 -->
-<div class="container" style="margin-top:100px">
-	<div class="row">
-		<div class="col-xl-24" style="margin-top:20px">
+<div  style="margin-top:100px">
+	{% comment %} <div class="row"> {% endcomment %}
+		{% comment %} <div class="col-xl-24" style="margin-top:20px"> {% endcomment %}
 			<div class="card shadow">
 				<div class="card-body">
                     <h4 class="card-title">Project SealM</h4>
@@ -85,8 +85,8 @@
 					</table>
 				</div>
 			</div>
-		</div>
-	</div>
+		{% comment %} </div> {% endcomment %}
+	{% comment %} </div> {% endcomment %}
 </div>
 	
 {% include 'bottom_info.html'%}
