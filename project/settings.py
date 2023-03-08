@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'board_app.apps.BoardAppConfig',
     'map_app.apps.MapAppConfig',
     'unityprofile.apps.UnityprofileConfig',
+    'django_tables2',
+    'bootstrap4',
     'rest_framework',
 ]
 
@@ -74,6 +76,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'django_tables2': 'django_tables2.templatetags.django_tables2',
+            },
         },
     },
 ]

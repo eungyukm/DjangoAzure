@@ -14,11 +14,11 @@
 <body>
 	
 {% include 'top_menu.html' %}
-<div>
-	<canvas id="myChart"></canvas>
-</div>
+
 <!-- 게시판 미리보기 부분 -->
 <div class="container" style="margin-top:100px">
+    
+
 	<div class="row">
 		{% for b1, c1 in board_data_list %}
 		<div class="col-lg-6" style="margin-top:20px">
@@ -54,7 +54,6 @@
 	
 {% include 'bottom_info.html'%}
 
-
 <script>
     // canvas 요소 가져오기
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -86,9 +85,11 @@
       options: options
     });
   </script>
+
 </body>
 </html>
 
+  
 
 
 

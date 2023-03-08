@@ -18,4 +18,7 @@ urlpatterns = [
 
     # 프로 파일 데이터 저장
     path('profile', views.api_profile_result),
+
+    # 경고 프로파일 데이터
+    path('warning_profile', views.api_warning_profile_result),
 ]

@@ -31,4 +31,6 @@ urlpatterns = [
     # 사용자 관련 Rest API
     path('api/account/', include('api.urls')),
     path('api/', include('api.urls')),
+    # 프로파일 관련
+    path('profile/', include('unityprofile.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,8 +12,23 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-	
-{% include 'top_menu.html' %}
+{% comment %} 	
+{% include 'top_menu.html' %} {% endcomment %}
+
+{% load render_table from django_tables2%}
+{% comment %} {% load bootstrap4 %} {% endcomment %}
+{% comment %} {% if table %}
+    <p>{{ table.rows|length }} 개의 데이터가 있습니다.</p>
+    <table>
+        {% render_table table %}
+    </table>
+{% else %}
+    <p>데이터가 없습니다.</p>
+{% endif %} {% endcomment %}
+
+<table class="table table-bordered">
+    {% render_table table %}
+</table>
 <div>
 	<canvas id="myChart"></canvas>
 </div>

@@ -2,3 +2,6 @@ django
 mysqlclient
 whitenoise
 djangorestframework
+django-tables2
+PrettyTable
+bootstrap4
