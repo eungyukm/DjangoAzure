@@ -12,10 +12,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-{% comment %} 	
-{% include 'top_menu.html' %} {% endcomment %}
 
-{% load render_table from django_tables2%}
+{% include 'top_menu.html' %}
+
+{% comment %} {% load render_table from django_tables2%} {% endcomment %}
 {% comment %} {% load bootstrap4 %} {% endcomment %}
 {% comment %} {% if table %}
     <p>{{ table.rows|length }} 개의 데이터가 있습니다.</p>
@@ -26,44 +26,66 @@
     <p>데이터가 없습니다.</p>
 {% endif %} {% endcomment %}
 
-<table class="table table-bordered">
+{% comment %} <table class="table table-bordered">
     {% render_table table %}
 </table>
 <div>
 	<canvas id="myChart"></canvas>
-</div>
+</div> {% endcomment %}
+
 <!-- 게시판 미리보기 부분 -->
 <div class="container" style="margin-top:100px">
 	<div class="row">
-		{% for b1, c1 in board_data_list %}
-		<div class="col-lg-6" style="margin-top:20px">
+		<div class="col-xl-24" style="margin-top:20px">
 			<div class="card shadow">
 				<div class="card-body">
-					<h4 class="card-title">{{b1.map_info_name}}</h4>
+                    <h4 class="card-title">Project SealM</h4>
+                    <h4 class="card-title">device {{device}}</h4>
 					<table class="table table-hover" id='board_list'>
 						<thead>
 							<tr>
-								<th class="text-center w-25">글번호</th>
-								<th>제목</th>
-								<th class="text-center w-25 d-none d-xl-table-cell">작성날짜</th>
+                                <th class="text-center">profile_count</th>
+                                <th class="text-center">scene_name</th>
+                                <th class="text-center">fps</th>
+                                <th class="text-center">min_fps</th>
+                                <th class="text-center">avg_fps</th>
+                                <th class="text-center">max_fps</th>
+                                <th class="text-center">set_pass_call</th>
+                                <th class="text-center">draw_call</th>
+                                <th class="text-center">tris</th>
+                                <th class="text-center">vertices</th>
+                                <th class="text-center">total_memory</th>
+                                <th class="text-center">system_memory</th>
+                                <th class="text-center">texture_memory</th>
+                                <th class="text-center">mesh_memory</th>
 							</tr>
 						</thead>
 						<tbody>
-							{% for c2 in c1%}
+							{% for r1 in content_list%}
 							<tr>
-								<td class="text-center">{{c2.map_data_idx}}</td>
-								<th><a href='/map/map_read?map_info_idx={{c2.map_info_idx.map_info_idx}}&map_data_idx={{c2.map_data_idx}}&page_num=1'>{{c2.map_data_subject}}</a></th>
-								<td class="text-center d-none d-xl-table-cell">{{c2.map_data_date|date:'Y-m-d'}}</td>
+                                <td class="text-center">{{r1.profile_count}}</td>
+                                <td class="text-center">{{r1.scene_name}}</td>
+                                <td class="text-center">{{r1.fps}}</td>
+                                <td class="text-center">{{r1.min_fps}}</td>
+                                <td class="text-center">{{r1.avg_fps}}</td>
+                                <td class="text-center">{{r1.max_fps}}</td>
+                                <td class="text-center">{{r1.set_pass_call}}</td>
+                                <td class="text-center">{{r1.draw_call}}</td>
+                                <td class="text-center">{{r1.tris}}</td>
+                                <td class="text-center">{{r1.vertices}}</td>
+                                <td class="text-center">{{r1.total_memory}}</td>
+                                <td class="text-center">{{r1.system_memory}}</td>
+                                <td class="text-center">{{r1.texture_memory}}</td>
+                                <td class="text-center">{{r1.mesh_memory}}</td>
+								{% comment %} <th><a href='/map/map_read?map_info_idx={{c2.map_info_idx.map_info_idx}}&map_data_idx={{c2.map_data_idx}}&page_num=1'>{{c2.map_data_subject}}</a></th> {% endcomment %}
+								{% comment %} <td class="text-center d-none d-xl-table-cell">{{c2.map_data_date|date:'Y-m-d'}}</td> {% endcomment %}
 							</tr>
 							{% endfor %}
 						</tbody>
 					</table>
-					
-					<a href="/map/map_main?map_info_idx={{b1.map_info_idx}}" class="btn btn-primary">더보기</a>
 				</div>
 			</div>
 		</div>
-		{% endfor %}
 	</div>
 </div>
 	
@@ -71,35 +93,9 @@
 
 
 <script>
-    // canvas 요소 가져오기
-    var ctx = document.getElementById('myChart').getContext('2d');
-    
-    // 데이터 설정
-    var data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        borderColor: 'rgb(255, 99, 132)',
-        tension: 0.1
-      }]
-    };
-    
-    // 옵션 설정
-    var options = {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    };
-    
-    // 그래프 생성
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: data,
-      options: options
-    });
+    setInterval(function() {
+        location.reload();
+    }, 5000);    
   </script>
 </body>
 </html>

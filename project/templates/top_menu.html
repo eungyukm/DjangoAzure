@@ -7,11 +7,22 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navMenu">
 		<ul class="navbar-nav">
-			{% for menu in request.menu_list %}
+			{% comment %} {% for menu in request.menu_list %}
 			<li class="nav-item">
 				<a href="/map/map_main?map_info_idx={{menu.map_info_idx}}" class="nav-link">{{menu.map_info_name}}</a>
 			</li>
-			{% endfor %}
+			{% endfor %} {% endcomment %}
+
+
+			<li class="nav-item">
+				<a href="/profile/galaxy10profiledatatable" class="nav-link">갤럭시 S 10</a>
+			</li>
+			<li class="nav-item">
+				<a href="/profile/galaxy9profiledatatable" class="nav-link">갤럭시 S 9</a>
+			</li>
+			<li class="nav-item">
+				<a href="/profile/galaxy8profiledatatable" class="nav-link">갤럭시 S 8</a>
+			</li>
 		</ul>
 		
 		<ul class="navbar-nav ml-auto">

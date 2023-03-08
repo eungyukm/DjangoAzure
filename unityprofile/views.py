@@ -18,24 +18,54 @@ def index(request):
         fps_dict.setdefault(model_data.profile_count, model_data.fps)
     
     print(fps_dict)
-
     
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
 
 def galaxys10profiledatatable(requeset):
-    queryset = GalaxyS10ProfileData.objects.all()
-
-    print(queryset)
-
-    # table = GalaxyS10ProfileDataTable(queryset)
+    queryset = GalaxyS10ProfileData.objects.order_by('-profile_idx')[:10]
     
+    content_list =[]
+    for q1 in queryset:
+        # 리스트에 담는다.
+        content_list.append(q1)
 
-    table = PrettyTable()
-    table.field_names = ['Name', 'Age', 'Gender']
-    table.add_row(["John", 25, "M"])
-    table.add_row(["Jane", 30, "F"])
-    context = {'table' : queryset}
-    print(table)
+    render_data = {
+        'device' : 'GalaxyS10',
+        'content_list': content_list,
+    }
+
     template = loader.get_template('profile.html')
-    return HttpResponse(template.render(context, requeset))
+    return HttpResponse(template.render(render_data, requeset))
+
+def galaxys9profiledatatable(requeset):
+    queryset = GalaxyS9ProfileData.objects.order_by('-profile_idx')[:10]
+    
+    content_list =[]
+    for q1 in queryset:
+        # 리스트에 담는다.
+        content_list.append(q1)
+
+    render_data = {
+        'device' : 'GalaxyS9',
+        'content_list': content_list,
+    }
+
+    template = loader.get_template('profile.html')
+    return HttpResponse(template.render(render_data, requeset))
+
+def galaxys8profiledatatable(requeset):
+    queryset = GalaxyS8ProfileData.objects.order_by('-profile_idx')[:10]
+    
+    content_list =[]
+    for q1 in queryset:
+        # 리스트에 담는다.
+        content_list.append(q1)
+
+    render_data = {
+        'device' : 'GalaxyS8',
+        'content_list': content_list,
+    }
+
+    template = loader.get_template('profile.html')
+    return HttpResponse(template.render(render_data, requeset))
