@@ -127,13 +127,13 @@ def remove_profiledatatable(requeset):
             '''
 
     if device == 'GalaxyS10':
-        GalaxyS10ProfileData.delete()
+        IPhone11ProfileData.objects.all().delete()
         return HttpResponse(galaxys10_message)
     elif device == 'GalaxyS9':
-        GalaxyS9ProfileData.delete()
+        IPhone11ProfileData.objects.all().delete()
         return HttpResponse(galaxys9_message)
     elif device == 'GalaxyS8':
-        GalaxyS8ProfileData.delete()
+        IPhone11ProfileData.objects.all().delete()
         return HttpResponse(galaxys8_message)
     elif device == 'IPhone11':
         IPhone11ProfileData.objects.all().delete()
