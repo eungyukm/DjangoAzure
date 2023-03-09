@@ -191,7 +191,7 @@ def api_profile_result(request):
         profile_data = unityprofile.models.GalaxyS9ProfileData()
     elif device_name == 'Galaxy S8':
         profile_data = unityprofile.models.GalaxyS8ProfileData()
-    elif device_name == 'IPhone 11':
+    elif device_name == 'iPhone12,1':
         profile_data = unityprofile.models.IPhone11ProfileData()
     else:
         profile_data = unityprofile.models.ProfileData()

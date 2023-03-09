@@ -71,7 +71,7 @@ def galaxys8profiledatatable(requeset):
     return HttpResponse(template.render(render_data, requeset))
 
 # 아이폰
-def IPhone11profiledatatable(requeset):
+def iphone11profiledatatable(requeset):
     queryset = IPhone11ProfileData.objects.order_by('-profile_idx')[:10]
     
     content_list =[]
@@ -86,6 +86,60 @@ def IPhone11profiledatatable(requeset):
 
     template = loader.get_template('profile.html')
     return HttpResponse(template.render(render_data, requeset))
+
+# 프로파일 데이터 전체 삭제
+def remove_profiledatatable(requeset):
+    device = requeset.GET['device']
+
+    message = '''
+            <script>
+                alert('데이터가 삭제 되었습니다.')
+                location.href = '/profile/galaxy10profiledatatable'
+            </script>
+            '''
+    
+    galaxys10_message = '''
+            <script>
+                alert('데이터가 삭제 되었습니다.')
+                location.href = '/profile/galaxy10profiledatatable'
+            </script>
+            '''
+    
+    galaxys9_message = '''
+            <script>
+                alert('데이터가 삭제 되었습니다.')
+                location.href = '/profile/galaxy9profiledatatable'
+            </script>
+            '''
+    
+    galaxys8_message = '''
+            <script>
+                alert('데이터가 삭제 되었습니다.')
+                location.href = '/profile/galaxy8profiledatatable'
+            </script>
+            '''
+    
+    iPhone11_message = '''
+            <script>
+                alert('데이터가 삭제 되었습니다.')
+                location.href = '/profile/iphone11profiledatatable'
+            </script>
+            '''
+
+    if device == 'GalaxyS10':
+        GalaxyS10ProfileData.delete()
+        return HttpResponse(galaxys10_message)
+    elif device == 'GalaxyS9':
+        GalaxyS9ProfileData.delete()
+        return HttpResponse(galaxys9_message)
+    elif device == 'GalaxyS8':
+        GalaxyS8ProfileData.delete()
+        return HttpResponse(galaxys8_message)
+    elif device == 'IPhone11':
+        IPhone11ProfileData.objects.all().delete()
+        return HttpResponse(iPhone11_message)
+    else:
+        return HttpResponse(message)
 
 # FPS Line Chart
 def FPSLineChart(requeset):
