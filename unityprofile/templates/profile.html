@@ -27,7 +27,7 @@
             <table class="table table-hover" id='board_list'>
                 <thead>
                     <tr>
-                        <th class="text-center">profile_count</th>
+                        <th class="text-center">profile_idx</th>
                         <th class="text-center">scene_name</th>
                         <th class="text-center">fps</th>
                         <th class="text-center">min_fps</th>
@@ -46,7 +46,7 @@
                 <tbody>
                     {% for r1 in content_list%}
                     <tr>
-                        <td class="text-center">{{r1.profile_count}}</td>
+                        <td class="text-center">{{r1.profile_idx}}</td>
                         <td class="text-center">{{r1.scene_name}}</td>
                         <td class="text-center">{{r1.fps}}</td>
                         <td class="text-center">{{r1.min_fps}}</td>
