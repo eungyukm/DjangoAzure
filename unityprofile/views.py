@@ -93,20 +93,29 @@ def iphone11profiledatatable(requeset):
     return HttpResponse(template.render(render_data, requeset))
 
 # 아이폰 11 테스트 결과 출력
-def iphone11test(requeset):
-    idx_list = [6784, 6789, 6812, 4734, 5734, 6728, 4772, 4836, 4857, 6711,
-                6701, 5007, 5056, 5775, 6780, 5306, 5981, 6136, 5628, 6451, 6639, 6656]
+def profiledata_all(requeset):
+    device = requeset.GET['device']
+    queryset = []
+    if(device == 'GalaxyS10'):
+        queryset = GalaxyS10ProfileData.objects.all()
+    elif(device == 'GalaxyS9'):
+        queryset = GalaxyS9ProfileData.objects.all()
+    elif(device == 'GalaxyS8'):
+        queryset = GalaxyS8ProfileData.objects.all()
+    elif(device == 'IPhone11'):
+        queryset = IPhone11ProfileData.objects.all()
+    
     content_list =[]
-    for idx in idx_list:
-        queryset = IPhone11ProfileData.objects.get(profile_idx=idx)
-        content_list.append(queryset)
+    for q1 in queryset:
+        # 리스트에 담는다.
+        content_list.append(q1)
 
     render_data = {
-        'device' : 'IPhone11',
-        'content_list': content_list,
+        'device' : device,
+        'content_list': queryset,
     }
 
-    template = loader.get_template('profile.html')
+    template = loader.get_template('profile_all.html')
     return HttpResponse(template.render(render_data, requeset))
 
 # 프로파일 데이터 전체 삭제
@@ -215,22 +224,47 @@ def scenario_write_result(request):
 
 # SetPassCall, DrawCall, Tris
 def scenario_main(request):
+    device = request.GET['device']
     scenario_data_lit = ScenarioDataTable.objects.all()
     profile_data = []
 
     for scenario in scenario_data_lit:
-        data = IPhone11ProfileData.objects.filter(profile_idx=scenario.scenario_profile_idx).first()
-        if(data):
-            profile_data.append(data)
-        else:
-            data = IPhone11ProfileData()
-            profile_data.append(data)
+        if(device == 'GalaxyS10'):
+            data = GalaxyS10ProfileData.objects.filter(profile_idx=scenario.scenario_profile_idx).first()
+            if(data):
+                profile_data.append(data)
+            else:
+                data = GalaxyS10ProfileData()
+                profile_data.append(data)
+        elif(device == 'GalaxyS9'):
+            data = GalaxyS9ProfileData.objects.filter(profile_idx=scenario.scenario_profile_idx).first()
+            if(data):
+                profile_data.append(data)
+            else:
+                data = GalaxyS9ProfileData()
+                profile_data.append(data)
+        elif(device == 'GalaxyS8'):
+            data = GalaxyS8ProfileData.objects.filter(profile_idx=scenario.scenario_profile_idx).first()
+            if(data):
+                profile_data.append(data)
+            else:
+                data = GalaxyS8ProfileData()
+                profile_data.append(data)
+
+        elif(device == 'IPhone11'):
+            data = IPhone11ProfileData.objects.filter(profile_idx=scenario.scenario_profile_idx).first()
+            if(data):
+                profile_data.append(data)
+            else:
+                data = IPhone11ProfileData()
+                profile_data.append(data)
 
     data_list = zip(scenario_data_lit,profile_data)
     template = loader.get_template('scenario_main.html')
 
     render_data = {
         'data_list' : data_list,
+        'device' : device,
     }
 
     return HttpResponse(template.render(render_data, request))

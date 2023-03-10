@@ -19,10 +19,11 @@
 <div class="container" style="margin-top:100px">
 	<div class="card shadow">
 		<div class="card-body">
-			<h4 class="card-title">{{map_data.mapp_info_name}}</h4>
+			<h4 class="card-title">{{device}}</h4>
 			<div class="form-group">
 				<div class="text-right">
 					<a href="/profile/write_scenario?data_list={{data_list}}" class="btn btn-primary">데이터 추가</a>
+					<a href="/profile/write_scenario?data_list={{data_list}}" class="btn btn-danger">데이터 삭제</a>
 				</div>
 			</div>
 			<table class="table table-hover" id='map_data_list'>
@@ -51,7 +52,7 @@
 						<td class="text-center d-none d-md-table-cell">{{profile.system_memory}}</td>
 						{% comment %} <td class="text-center d-none d-md-table-cell">0</td> {% endcomment %}
 						<td class="text-center d-none d-md-table-cell">
-							<a href="/profile/scenario_modify?scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-primary">수정 / 삭제</a>
+							<a href="/profile/scenario_modify?scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-info">수정 / 삭제</a>
 						</td>
 						
 					</tr>

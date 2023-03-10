@@ -16,6 +16,6 @@ urlpatterns = [
     path('scenario_modify', views.scenario_modify),
     path('scenario_modify_result', views.scenario_modify_result),
 
-    # 테스트 iphone11test
-    path('iphone11test', views.iphone11test),
+    # 전체 프로파일 데이터 출력
+    path('profiledata_all', views.profiledata_all),
 ]
