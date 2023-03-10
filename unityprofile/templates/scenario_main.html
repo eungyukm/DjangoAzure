@@ -35,7 +35,7 @@
 						<th class="text-center d-none d-md-table-cell">Draw Call</th>
 						<th class="text-center d-none d-md-table-cell">tris</th>
 						<th class="text-center d-none d-md-table-cell">Memory (GB)</th>
-						<th class="text-center d-none d-md-table-cell">TEMP (ºC)</th>
+						{% comment %} <th class="text-center d-none d-md-table-cell">TEMP (ºC)</th> {% endcomment %}
 						<th class="text-center d-none d-md-table-cell">수정 / 삭제</th>
 					</tr>
 				</thead>
@@ -49,7 +49,7 @@
 						<td class="text-center d-none d-md-table-cell">{{profile.draw_call}}</td>
 						<td class="text-center d-none d-md-table-cell">{{profile.tris}}</td>
 						<td class="text-center d-none d-md-table-cell">{{profile.system_memory}}</td>
-						<td class="text-center d-none d-md-table-cell">0</td>
+						{% comment %} <td class="text-center d-none d-md-table-cell">0</td> {% endcomment %}
 						<td class="text-center d-none d-md-table-cell">
 							<a href="/profile/scenario_modify?scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-primary">수정 / 삭제</a>
 						</td>

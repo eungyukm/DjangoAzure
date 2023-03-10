@@ -32,17 +32,33 @@
 						<label for="scenario_data_subject">테스트 환경 타이틀</label>
 						<input type="text" id="scenario_data_subject" name="scenario_data_subject" class="form-control" value="{{scenario_data.scenario_data_subject}}" required/>
 					</div>
-                    <div class="form-group">
-						<label for="device_name">디바이스</label>
-						<input type="text" id="device_name" name="device_name" class="form-control" value="{{scenario_data.device_name}}"required/>
+					<div class="form-group">
+						<input type="hidden" id="device_name" name="device_name" class="form-control" value="{{scenario_data.device_name}}"required/>
+						<div class="dropdown">
+							<label for="device_name">디바이스</label>
+							<button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <!-- 선택된 옵션의 텍스트가 표시될 label 요소 -->
+							  <label for="dropdownMenuButton">{{scenario_data.device_name}}</label>
+							</button>								
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								{% for device in device_info_list %}
+								<a class="dropdown-item" href="#" value="option1">{{device.device_name}}</a>
+								{% endfor %}
+							</div>
+						</div>
 					</div>
+					  
                     <div class="form-group">
 						<label for="scenario_profile_idx">프로파일 id</label>
 						<input type="text" id="scenario_profile_idx" name="scenario_profile_idx" class="form-control" value="{{scenario_data.scenario_profile_idx}}"required/>
 					</div>
+					{% comment %} <div class="form-group">
+						<label for="scenario_profile_idx">디바이스 온도</label>
+						<input type="text" id="scenario_profile_idx" name="scenario_profile_idx" class="form-control" value="{{scenario_data.scenario_profile_idx}}"required/>
+					</div> {% endcomment %}
 					<div class="form-group">
 						<label for="scenario_data_text">테스트 환경의 내용</label>
-						<textarea id="scenario_data_text" name="scenario_data_text" class="form-control" rows="10" style="resize:none" required>{{scenario_data.scenario_data_text}}</textarea>
+						<textarea id="scenario_data_text" name="scenario_data_text" class="form-control" rows="3" style="resize:none" required>{{scenario_data.scenario_data_text}}</textarea>
 					</div>
 					<div class="form-group">
 						<label for="scenario_data_file">테스트 환경 이미지</label>
@@ -55,6 +71,11 @@
 					</div>
 					
 					</form>
+					<div class="dropdown-menu">
+						<h6 class="dropdown-header">Dropdown header</h6>
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -64,7 +85,24 @@
 	
 {% include 'bottom_info.html'%}
 
-<script> 
+<script>
+// 드롭다운 메뉴의 변경 이벤트 리스너 등록
+$('.dropdown-menu a').on('click', function() {
+	// 선택된 옵션의 텍스트 값
+	var selectedOption = $(this).text();
+	// 선택된 옵션의 값(속성값) - 예를 들어 href 속성값 등
+	var selectedValue = $(this).attr('value');
+	
+	// label 요소의 value 속성을 선택된 옵션의 값으로 설정
+	$('label[for="dropdownMenuButton"]').attr('value', selectedValue);
+	
+	// label 요소의 텍스트를 선택된 옵션으로 변경
+	$('label[for="dropdownMenuButton"]').text(selectedOption);
+
+	var device_name_inputElement = document.getElementById('device_name');
+	device_name_inputElement.value = selectedOption;
+  });
+  
 </script>
 </body>
 </html>

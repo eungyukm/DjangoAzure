@@ -216,59 +216,49 @@ def scenario_write_result(request):
 # SetPassCall, DrawCall, Tris
 def scenario_main(request):
     scenario_data_lit = ScenarioDataTable.objects.all()
-    scenario_count = range(0, scenario_data_lit.count())
     profile_data = []
 
     for scenario in scenario_data_lit:
-        #print(scenario.scenario_profile_idx)
-        data = IPhone11ProfileData.objects.filter(profile_idx=scenario.scenario_profile_idx).first
-        # print(data)
-        data_check = IPhone11ProfileData.objects.filter(profile_idx=scenario.scenario_profile_idx).count
-        if(data_check):
+        data = IPhone11ProfileData.objects.filter(profile_idx=scenario.scenario_profile_idx).first()
+        if(data):
+            profile_data.append(data)
+        else:
             data = IPhone11ProfileData()
-        profile_data.append(data)
+            profile_data.append(data)
 
     data_list = zip(scenario_data_lit,profile_data)
     template = loader.get_template('scenario_main.html')
 
-    temp = []
-    # print(page_next)
-
     render_data = {
         'data_list' : data_list,
-        'temp' : temp,
     }
-    
+
     return HttpResponse(template.render(render_data, request))
 
 def scenario_modify(request):
     # 파라미터 데이터를 추출합니다.
     scenario_data_idx = request.GET['scenario_data_idx']
-    scenario_data = ScenarioDataTable.objects.filter(scenario_data_idx = scenario_data_idx).first
+    scenario_data = ScenarioDataTable.objects.filter(scenario_data_idx = scenario_data_idx).first()
+    # 디바이스 정보를 가지고 있는 리스트
+    device_info_list = DeviceInfoTable.objects.all()
 
-    print(scenario_data_idx)
-
-    # profile_idx = request.GET['profile_idx']
-
-    # 현재 글 정보를 가져옵니다.
-    # map_model = map_app.models.MapDataTable.objects
-    # map_model = map_model.select_related('map_data_writer_idx', 'map_info_idx')
-    # map_model = map_model.get(map_data_idx=map_data_idx)
 
     template = loader.get_template('scenario_modify.html')
     render_data = {
         'scenario_data': scenario_data,
+        'device_info_list' : device_info_list,
     }
     return HttpResponse(template.render(render_data, request))
 
 @csrf_exempt
-def scenario_write_result(request):
+def scenario_modify_result(request):
     scenario_data_idx = request.POST['scenario_data_idx']
     project_name = request.POST['project_name']
     scenario_data_subject = request.POST['scenario_data_subject']
     scenario_data_text = request.POST['scenario_data_text']
     scenario_profile_idx = request.POST['scenario_profile_idx']
     scenario_data_file = request.POST['scenario_data_file']
+    device_name = request.POST['device_name']
 
     scenario_model = ScenarioDataTable.objects.get(scenario_data_idx = scenario_data_idx)
 
@@ -278,6 +268,7 @@ def scenario_write_result(request):
     scenario_model.scenario_data_text = scenario_data_text
     scenario_model.scenario_profile_idx = scenario_profile_idx
     scenario_model.scenario_data_file = scenario_data_file
+    scenario_model.device_name = device_name
 
     if scenario_data_file:
         scenario_model.scenario_data_file = scenario_data_file
