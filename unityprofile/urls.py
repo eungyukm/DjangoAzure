@@ -14,6 +14,7 @@ urlpatterns = [
     path('scenario_write_result', views.scenario_write_result),
     path('scenario_main', views.scenario_main),
     path('scenario_modify', views.scenario_modify),
+    path('scenario_modify_result', views.scenario_write_result),
 
     # 테스트 iphone11test
     path('iphone11test', views.iphone11test),

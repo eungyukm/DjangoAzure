@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponse
 from django.template import loader
 from unityprofile.models import GalaxyS10ProfileData, GalaxyS9ProfileData, GalaxyS8ProfileData, IPhone11ProfileData
 from unityprofile.models import GalaxyS10ProfileDataTable
+from unityprofile.models import DeviceInfoTable, ProjectInfoTable
 
 # 테스트 시나리오 저장 테이블
 from unityprofile.models import ScenarioDataTable
@@ -22,8 +23,6 @@ def index(request):
 
     for model_data in queryset:
         fps_dict.setdefault(model_data.profile_count, model_data.fps)
-    
-    print(fps_dict)
     
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
@@ -213,6 +212,7 @@ def scenario_write_result(request):
             '''
     return HttpResponse(message)
 
+
 # SetPassCall, DrawCall, Tris
 def scenario_main(request):
     scenario_data_lit = ScenarioDataTable.objects.all()
@@ -238,12 +238,13 @@ def scenario_main(request):
         'data_list' : data_list,
         'temp' : temp,
     }
+    
     return HttpResponse(template.render(render_data, request))
 
 def scenario_modify(request):
     # 파라미터 데이터를 추출합니다.
-    scenario_data_idx = request.GET['idx']
-    data = ScenarioDataTable.objects.filter(scenario_data_idx = scenario_data_idx).first
+    scenario_data_idx = request.GET['scenario_data_idx']
+    scenario_data = ScenarioDataTable.objects.filter(scenario_data_idx = scenario_data_idx).first
 
     print(scenario_data_idx)
 
@@ -255,10 +256,40 @@ def scenario_modify(request):
     # map_model = map_model.get(map_data_idx=map_data_idx)
 
     template = loader.get_template('scenario_modify.html')
-    # render_data = {
-    #     'map_info_idx': map_info_idx,
-    #     'map_data_idx': map_data_idx,
-    #     'page_num': page_num,
-    #     'map_model': map_model,
-    # }
-    return HttpResponse(template.render())
+    render_data = {
+        'scenario_data': scenario_data,
+    }
+    return HttpResponse(template.render(render_data, request))
+
+@csrf_exempt
+def scenario_write_result(request):
+    scenario_data_idx = request.POST['scenario_data_idx']
+    project_name = request.POST['project_name']
+    scenario_data_subject = request.POST['scenario_data_subject']
+    scenario_data_text = request.POST['scenario_data_text']
+    scenario_profile_idx = request.POST['scenario_profile_idx']
+    scenario_data_file = request.POST['scenario_data_file']
+
+    scenario_model = ScenarioDataTable.objects.get(scenario_data_idx = scenario_data_idx)
+
+    # 정보 설정
+    scenario_model.project_name = project_name
+    scenario_model.scenario_data_subject = scenario_data_subject
+    scenario_model.scenario_data_text = scenario_data_text
+    scenario_model.scenario_profile_idx = scenario_profile_idx
+    scenario_model.scenario_data_file = scenario_data_file
+
+    if scenario_data_file:
+        scenario_model.scenario_data_file = scenario_data_file
+
+    # 저장합니다.
+    scenario_model.save()
+
+
+    message = f'''
+            <script>
+                alert('저장되었습니다')
+                location.href = '/profile/scenario_modify?scenario_data_idx={scenario_data_idx}'
+            </script>
+            '''
+    return HttpResponse(message)

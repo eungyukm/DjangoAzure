@@ -187,3 +187,12 @@ class ScenarioDataTable(models.Model):
     scenario_data_text = models.TextField()
     scenario_profile_idx = models.IntegerField(default=0)
     scenario_data_file = models.FileField(upload_to='files/', null=True)
+
+class DeviceInfoTable(models.Model):
+    device_info_idx = models.AutoField(primary_key=True)
+    device_name = models.CharField(max_length=30, default='none')
+    device_profile_name = models.CharField(max_length=30, default='none')
+
+class ProjectInfoTable(models.Model):
+    project_info_idx = models.AutoField(primary_key=True)
+    project_name = models.CharField(max_length=30, default='none')
