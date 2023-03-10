@@ -284,6 +284,39 @@ def scenario_modify(request):
     }
     return HttpResponse(template.render(render_data, request))
 
+def scenario_delete(request):
+    project = request.GET['project']
+    # 파라미터 데이터를 추출합니다.
+    scenario_data_idx = request.GET['scenario_data_idx']
+
+    query = ScenarioDataTable.objects.get(scenario_data_idx=scenario_data_idx)
+    query.delete()
+    message = f'''
+        <script>
+            alert('삭제되었습니다')
+            location.href = '/profile/project_scenario_main?project=SealM'
+        </script>
+         '''
+    return HttpResponse(message)
+
+def map_delete(request):
+    # 파라미터를 추출합니다.
+    map_info_idx = request.GET['map_info_idx']
+    map_data_idx = request.GET['map_data_idx']
+
+    # 삭제
+    query = map_app.models.MapDataTable.objects.get(map_data_idx=map_data_idx)
+    query.delete()
+
+    message = f'''
+        <script>
+            alert('삭제되었습니다')
+            location.href = '/map/map_main?map_info_idx={map_info_idx}'
+        </script>
+         '''
+
+    return HttpResponse(message)
+
 @csrf_exempt
 def scenario_modify_result(request):
     scenario_data_idx = request.POST['scenario_data_idx']
@@ -318,3 +351,18 @@ def scenario_modify_result(request):
             </script>
             '''
     return HttpResponse(message)
+
+
+
+def project_scenario_main(request):
+    project = request.GET['project']
+    scenario_list = ScenarioDataTable.objects.all()
+
+    template = loader.get_template('project_scenario_main.html')
+
+    render_data = {
+        'project' : project,
+        'scenario_list' : scenario_list,
+    }
+
+    return HttpResponse(template.render(render_data, request))

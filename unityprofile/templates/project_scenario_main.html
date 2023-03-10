@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자페이지</title>
+<!-- Bootstrap CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- 상단 메뉴 부분 -->
+{% include 'top_menu.html' %}
+
+<!-- 게시글 리스트 -->
+<div class="container" style="margin-top:100px">
+	<div class="card shadow">
+		<div class="card-body">
+			<h4 class="card-title">{{device}}</h4>
+			<div class="form-group">
+				<div class="text-right">
+					<a href="/profile/write_scenario?data_list={{data_list}}" class="btn btn-primary">데이터 추가</a>
+				</div>
+			</div>
+			<table class="table table-hover" id='map_data_list'>
+				<thead>
+					<tr>
+						<th class="text-center d-none d-md-table-cell">프로젝트 명</th>
+                        <th class="text-center d-none d-md-table-cell">테스트 환경 타이틀</th>
+                        <th class="text-center d-none d-md-table-cell">테스트 환경의 내용</th>
+						<th class="text-center d-none d-md-table-cell">테스트 환경 삭제</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for scenario in scenario_list%}
+					<tr>
+                        <td class="text-center d-none d-md-table-cell">{{scenario.project_name}}</td>
+                        <td class="text-center d-none d-md-table-cell">{{scenario.scenario_data_subject}}</td>
+                        <td class="text-center d-none d-md-table-cell">{{scenario.scenario_data_text}}</td>
+						<td class="text-center d-none d-md-table-cell">
+							<a href="/profile/scenario_delete?project=SealM&&scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-danger">테스트 환경 삭제</a>
+						</td>
+						
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>			
+			
+			{% comment %} <div class="text-right">
+				<a href="/map/map_write?map_info_idx={{map_info_idx}}" class="btn btn-primary">추가</a>
+			</div> {% endcomment %}
+			
+		</div>
+	</div>
+</div>
+
+{% include 'bottom_info.html'%}
+</body>
+</html>
+
+
+
+
+
+

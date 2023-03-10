@@ -15,7 +15,12 @@ urlpatterns = [
     path('scenario_main', views.scenario_main),
     path('scenario_modify', views.scenario_modify),
     path('scenario_modify_result', views.scenario_modify_result),
+    path('scenario_delete', views.scenario_delete),
 
     # 전체 프로파일 데이터 출력
     path('profiledata_all', views.profiledata_all),
+
+
+    # 프로젝트 별 시나리오를 관리
+    path('project_scenario_main', views.project_scenario_main),
 ]
