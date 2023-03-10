@@ -201,11 +201,13 @@ def scenario_write_result(request):
     project_name = request.POST['project_name']
     scenario_data_subject = request.POST['scenario_data_subject']
     scenario_data_text = request.POST['scenario_data_text']
+    ordering_number = request.POST['ordering_number']
 
     scenario_model = ScenarioDataTable()
     scenario_model.project_name = project_name
     scenario_model.scenario_data_subject = scenario_data_subject
     scenario_model.scenario_data_text = scenario_data_text
+    scenario_model.ordering_number = ordering_number
 
     # 업로드된 파일 명을 가져옵니다.
     scenario_model.scenario_data_file = request.FILES.get('scenario_data_file')
@@ -216,7 +218,7 @@ def scenario_write_result(request):
     message = f'''
             <script>
                 alert('저장되었습니다')
-                location.href = '/profile/write_scenario'
+                location.href = '/profile/project_scenario_main?project={project_name}'
             </script>
             '''
     return HttpResponse(message)
@@ -299,24 +301,6 @@ def scenario_delete(request):
          '''
     return HttpResponse(message)
 
-def map_delete(request):
-    # 파라미터를 추출합니다.
-    map_info_idx = request.GET['map_info_idx']
-    map_data_idx = request.GET['map_data_idx']
-
-    # 삭제
-    query = map_app.models.MapDataTable.objects.get(map_data_idx=map_data_idx)
-    query.delete()
-
-    message = f'''
-        <script>
-            alert('삭제되었습니다')
-            location.href = '/map/map_main?map_info_idx={map_info_idx}'
-        </script>
-         '''
-
-    return HttpResponse(message)
-
 @csrf_exempt
 def scenario_modify_result(request):
     scenario_data_idx = request.POST['scenario_data_idx']
@@ -366,3 +350,53 @@ def project_scenario_main(request):
     }
 
     return HttpResponse(template.render(render_data, request))
+
+
+def project_scenario_modify(request):
+    project = request.GET['project']
+    scenario_data_idx = request.GET['scenario_data_idx']
+
+    # 파라미터 데이터를 추출합니다.
+    scenario_list = ScenarioDataTable.objects.filter(scenario_data_idx = scenario_data_idx).first()
+
+
+    template = loader.get_template('project_scenario_modify.html')
+
+    render_data = {
+        'project' : project,
+        'scenario_list' : scenario_list,
+    }
+    return HttpResponse(template.render(render_data, request))
+
+@csrf_exempt
+def project_scenario_modify_result(request):
+    scenario_data_idx = request.POST['scenario_data_idx']
+    project_name = request.POST['project_name']
+    scenario_data_subject = request.POST['scenario_data_subject']
+    scenario_data_text = request.POST['scenario_data_text']
+    scenario_data_file = request.POST['scenario_data_file']
+    ordering_number = request.POST['ordering_number']
+
+    scenario_model = ScenarioDataTable.objects.get(scenario_data_idx= int(scenario_data_idx))
+
+    # 정보 설정
+    scenario_model.project_name = project_name
+    scenario_model.scenario_data_subject = scenario_data_subject
+    scenario_model.scenario_data_text = scenario_data_text
+    scenario_model.scenario_data_file = scenario_data_file
+    scenario_model.ordering_number = ordering_number
+
+    if scenario_data_file:
+        scenario_model.scenario_data_file = scenario_data_file
+
+    # 저장합니다.
+    scenario_model.save()
+
+
+    message = f'''
+            <script>
+                alert('수정되었습니다')
+                location.href = '/profile/project_scenario_main?project={project_name}&&scenario_data_idx={scenario_data_idx}'
+            </script>
+            '''
+    return HttpResponse(message)

@@ -25,23 +25,30 @@
 					<a href="/profile/write_scenario?data_list={{data_list}}" class="btn btn-primary">데이터 추가</a>
 				</div>
 			</div>
+            <input type="hidden" name="scenario_data_idx" value="{{scenario_list.scenario_data_idx}}"/>
 			<table class="table table-hover" id='map_data_list'>
 				<thead>
 					<tr>
+                        <th class="text-center d-none d-md-table-cell">NO</th>
 						<th class="text-center d-none d-md-table-cell">프로젝트 명</th>
                         <th class="text-center d-none d-md-table-cell">테스트 환경 타이틀</th>
                         <th class="text-center d-none d-md-table-cell">테스트 환경의 내용</th>
-						<th class="text-center d-none d-md-table-cell">테스트 환경 삭제</th>
+                        <th class="text-center d-none d-md-table-cell">수정</th>
+						<th class="text-center d-none d-md-table-cell">삭제</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for scenario in scenario_list%}
 					<tr>
+                        <td class="text-center d-none d-md-table-cell">{{scenario.ordering_number}}</td>
                         <td class="text-center d-none d-md-table-cell">{{scenario.project_name}}</td>
                         <td class="text-center d-none d-md-table-cell">{{scenario.scenario_data_subject}}</td>
                         <td class="text-center d-none d-md-table-cell">{{scenario.scenario_data_text}}</td>
+                        <td class="text-center d-none d-md-table-cell">
+							<a href="/profile/project_scenario_modify?project=SealM&&scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-info">수정</a>
+						</td>
 						<td class="text-center d-none d-md-table-cell">
-							<a href="/profile/scenario_delete?project=SealM&&scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-danger">테스트 환경 삭제</a>
+							<a href="/profile/scenario_delete?project=SealM&&scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-danger">삭제</a>
 						</td>
 						
 					</tr>

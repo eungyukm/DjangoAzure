@@ -21,32 +21,32 @@
 		<div class="col-sm-6">
 			<div class="card shadow">
 				<div class="card-body">
-					<form action="/profile/scenario_write_result" method="post" enctype="multipart/form-data">
+					<form action="/profile/project_scenario_modify_result" method="post" enctype="multipart/form-data">
 					{% csrf_token %}
-					<input type="hidden" name="map_info_idx" value="{{map_info_idx}}"/>
+					<input type="hidden" name="scenario_data_idx" value="{{scenario_list.scenario_data_idx}}"/>
 					<div class="form-group">
 						<label for="project_name">프로젝트 명</label>
-						<input type="text" id="project_name" name="project_name" class="form-control" value = "SealM" required/>
+						<input type="text" id="project_name" name="project_name" class="form-control" value = "{{project}}" required/>
 					</div>
 					<div class="form-group">
 						<label for="ordering_number">정렬 번호</label>
-						<input type="text" id="ordering_number" name="ordering_number" class="form-control" value="0" required/>
+						<input type="text" id="ordering_number" name="ordering_number" class="form-control" value="{{scenario_list.ordering_number}}" required/>
 					</div>
 					<div class="form-group">
 						<label for="scenario_data_subject">테스트 환경 타이틀</label>
-						<input type="text" id="scenario_data_subject" name="scenario_data_subject" class="form-control" required/>
+						<input type="text" id="scenario_data_subject" name="scenario_data_subject" class="form-control" value="{{scenario_list.scenario_data_subject}}" required/>
 					</div>
 					<div class="form-group">
 						<label for="scenario_data_text">테스트 환경의 내용</label>
-						<textarea id="scenario_data_text" name="scenario_data_text" class="form-control" rows="10" style="resize:none" required></textarea>
+						<textarea id="scenario_data_text" name="scenario_data_text" class="form-control" rows="10" style="resize:none" required>{{scenario_list.scenario_data_text}}</textarea>
 					</div>
 					<div class="form-group">
 						<label for="scenario_data_file">테스트 환경 이미지</label>
-						<input type="file" id="scenario_data_file" name="scenario_data_file" class="form-control" accept="image/*"/>
+						<input type="file" id="scenario_data_file" name="scenario_data_file" class="form-control" value="{{scenario_list.scenario_data_file}}" accept="image/*"/>
 					</div>
 					<div class="form-group">
 						<div class="text-right">
-							<button type="submit" class="btn btn-primary">작성하기</button>
+							<button type="submit" class="btn btn-primary">수정하기</button>
 						</div>
 					</div>
 					
