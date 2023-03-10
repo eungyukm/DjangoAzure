@@ -178,3 +178,12 @@ class GalaxyS10ProfileDataTable(tables.Table):
         attrs = {
             'class': 'table table-hover table-striped',  # bootstrap 테마 적용
         }
+
+class ScenarioDataTable(models.Model):
+    scenario_data_idx = models.AutoField(primary_key=True)
+    project_name = models.CharField(max_length=100)
+    device_name = models.CharField(max_length=30, default='none')
+    scenario_data_subject = models.CharField(max_length=500)
+    scenario_data_text = models.TextField()
+    scenario_profile_idx = models.IntegerField(default=0)
+    scenario_data_file = models.FileField(upload_to='files/', null=True)
