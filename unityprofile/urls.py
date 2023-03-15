@@ -24,5 +24,8 @@ urlpatterns = [
     path('project_scenario_main', views.project_scenario_main),
     path('project_scenario_modify', views.project_scenario_modify),
     path('project_scenario_modify_result', views.project_scenario_modify_result),
-    path('scenario_delete', views.scenario_delete),
+    path('project_scenario_delete', views.project_scenario_delete),
+
+    # 시나리오 별 프로파일 결과 관리
+    path('profile_result_main', views.profile_result_main),
 ]

@@ -45,10 +45,10 @@
                         <td class="text-center d-none d-md-table-cell">{{scenario.scenario_data_subject}}</td>
                         <td class="text-center d-none d-md-table-cell">{{scenario.scenario_data_text}}</td>
                         <td class="text-center d-none d-md-table-cell">
-							<a href="/profile/project_scenario_modify?project=SealM&&scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-info">수정</a>
+							<a href="/profile/project_scenario_modify?project_name={{scenario.project_name}}&&scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-info">수정</a>
 						</td>
 						<td class="text-center d-none d-md-table-cell">
-							<a href="/profile/scenario_delete?project=SealM&&scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-danger">삭제</a>
+							<a href="/profile/project_scenario_delete?project_name={{scenario.project_name}}&&scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-danger">삭제</a>
 						</td>
 						
 					</tr>

@@ -6,11 +6,12 @@ from unityprofile.models import GalaxyS10ProfileDataTable
 from unityprofile.models import DeviceInfoTable, ProjectInfoTable
 
 # 테스트 시나리오 저장 테이블
-from unityprofile.models import ScenarioDataTable
+from unityprofile.models import ScenarioDataTable, ProfileResultTable
 from prettytable import PrettyTable
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.db.models import Q
 
 # Create your views here.
 def index(request):
@@ -195,7 +196,7 @@ def write_scenario(request):
     template = loader.get_template('scenario_form.html')
     return HttpResponse(template.render())
 
-
+# 시나리오 데이터를 추가하는 코드
 @csrf_exempt
 def scenario_write_result(request):
     project_name = request.POST['project_name']
@@ -214,11 +215,18 @@ def scenario_write_result(request):
 
     scenario_model.save()
 
+    device_info = DeviceInfoTable.objects.all()
+    fps_list = [30, 60]
+    for fps in fps_list:
+        for device in device_info:
+            profile_result1 = ProfileResultTable.objects.create(device=device, target_fps=fps, scenario_data=scenario_model)
+            profile_result1.project_name = project_name
+            profile_result1.save()
 
     message = f'''
             <script>
                 alert('저장되었습니다')
-                location.href = '/profile/project_scenario_main?project={project_name}'
+                location.href = '/profile/project_scenario_main?project_name={project_name}'
             </script>
             '''
     return HttpResponse(message)
@@ -286,8 +294,8 @@ def scenario_modify(request):
     }
     return HttpResponse(template.render(render_data, request))
 
-def scenario_delete(request):
-    project = request.GET['project']
+def project_scenario_delete(request):
+    project_name = request.GET['project_name']
     # 파라미터 데이터를 추출합니다.
     scenario_data_idx = request.GET['scenario_data_idx']
 
@@ -296,7 +304,7 @@ def scenario_delete(request):
     message = f'''
         <script>
             alert('삭제되었습니다')
-            location.href = '/profile/project_scenario_main?project=SealM'
+            location.href = '/profile/project_scenario_main?project_name={project_name}'
         </script>
          '''
     return HttpResponse(message)
@@ -339,21 +347,21 @@ def scenario_modify_result(request):
 
 
 def project_scenario_main(request):
-    project = request.GET['project']
-    scenario_list = ScenarioDataTable.objects.all()
+    project_name = request.GET['project_name']
+    scenario_list = ScenarioDataTable.objects.filter(project_name=project_name)
 
     template = loader.get_template('project_scenario_main.html')
 
     render_data = {
-        'project' : project,
+        'project' : project_name,
         'scenario_list' : scenario_list,
     }
 
     return HttpResponse(template.render(render_data, request))
 
-
+# 프로젝트의 프로파일 결과를 출력하는 html response
 def project_scenario_modify(request):
-    project = request.GET['project']
+    project_name = request.GET['project_name']
     scenario_data_idx = request.GET['scenario_data_idx']
 
     # 파라미터 데이터를 추출합니다.
@@ -363,7 +371,7 @@ def project_scenario_modify(request):
     template = loader.get_template('project_scenario_modify.html')
 
     render_data = {
-        'project' : project,
+        'project' : project_name,
         'scenario_list' : scenario_list,
     }
     return HttpResponse(template.render(render_data, request))
@@ -396,7 +404,29 @@ def project_scenario_modify_result(request):
     message = f'''
             <script>
                 alert('수정되었습니다')
-                location.href = '/profile/project_scenario_main?project={project_name}&&scenario_data_idx={scenario_data_idx}'
+                location.href = '/profile/project_scenario_main?project_name={project_name}&&scenario_data_idx={scenario_data_idx}'
             </script>
             '''
     return HttpResponse(message)
+
+
+# 프로파일의 결과를 출력하는 화면
+def profile_result_main(request):
+    project_name = request.GET['project_name']
+    device_id = request.GET['device_id']
+    target_fps = request.GET['target_fps']
+
+    query = Q(project_name=project_name) & Q(device_id=device_id) & Q(target_fps=target_fps)
+    profile_reulst_list = ProfileResultTable.objects.filter(query)
+    device_info_table = DeviceInfoTable.objects.filter(device_info_idx=device_id).first()
+    device_name = device_info_table.device_name
+
+    template = loader.get_template('scenario_main.html')
+
+    render_data = {
+        'project_name' : project_name,
+        'device_name' : device_name,
+        'profile_reulst_list' : profile_reulst_list,
+    }
+
+    return HttpResponse(template.render(render_data, request))

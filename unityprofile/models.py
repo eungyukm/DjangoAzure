@@ -199,3 +199,16 @@ class DeviceInfoTable(models.Model):
 class ProjectInfoTable(models.Model):
     project_info_idx = models.AutoField(primary_key=True)
     project_name = models.CharField(max_length=30, default='none')
+
+class ProfileResultTable(models.Model):
+    profile_result_id = models.AutoField(primary_key=True)
+    scenario_data = models.ForeignKey(ScenarioDataTable, on_delete=models.CASCADE)
+    device = models.ForeignKey(DeviceInfoTable, null=True, blank=True, on_delete=models.CASCADE)
+    project_name = models.CharField(max_length=30, default='none')
+    device_temperature = models.FloatField(default=0.0)
+    ordering_number = models.IntegerField(default=0)
+    scenario_profile_idx = models.IntegerField(default=0)
+    target_fps = models.IntegerField(default=30)
+
+    class Meta:
+        ordering = ['ordering_number']
