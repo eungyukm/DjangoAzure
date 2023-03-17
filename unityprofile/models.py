@@ -193,7 +193,7 @@ class ScenarioDataTable(models.Model):
 
 class DeviceInfoTable(models.Model):
     device_info_idx = models.AutoField(primary_key=True)
-    device_name = models.CharField(max_length=30, default='none')
+    device_name = models.CharField(max_length=30, default='none', unique=True)
     device_profile_name = models.CharField(max_length=30, default='none')
 
 class ProjectInfoTable(models.Model):

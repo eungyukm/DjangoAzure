@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자페이지</title>
+<!-- Bootstrap CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+{% include 'top_menu.html' %}
+
+<div class="container" style="margin-top:100px">
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			<div class="card shadow">
+				<div class="card-body">
+					<form action="/profile/profile_result_modify_result" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<input type="hidden" name="profile_result_id" value="{{profile_result_list.profile_result_id}}"/>
+                    <input type="hidden" name="scenario_data_id" value="{{profile_result_list.scenario_data}}"/>
+					<div class="form-group">
+						<label for="project_name">프로젝트 명</label>
+						<input type="text" id="project_name" name="project_name" class="form-control" value = "{{profile_result_list.project_name}}" required/>
+					</div>
+					<div class="form-group">
+						<label for="ordering_number">정렬 번호</label>
+						<input type="text" id="ordering_number" name="ordering_number" class="form-control" value="{{profile_result_list.ordering_number}}" required/>
+					</div>
+                    <div class="form-group">
+						<label for="scenario_profile_idx">프로파일 id</label>
+						<input type="text" id="scenario_profile_idx" name="scenario_profile_idx" class="form-control" value="{{profile_result_list.scenario_profile_idx}}" required/>
+					</div>
+
+                    <!-- 디바이스 dropdown -->
+					<div class="form-group">
+						<input type="hidden" id="device_name" name="device_name" class="form-control" value="{{device_name}}" required/>
+						<div class="dropdown">
+							<label for="device_name">디바이스</label>
+							<button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <!-- 선택된 옵션의 텍스트가 표시될 label 요소 -->
+							  <label for="dropdownMenuButton">{{device_name}}</label>
+							</button>								
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								{% for device in device_info_list %}
+								<a class="dropdown-item" href="#" value="option1">{{device.device_name}}</a>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+                    <div class="form-group">
+						<label for="target_fps">Target FPS</label>
+						<input type="text" id="target_fps" name="target_fps" class="form-control" value="{{profile_result_list.target_fps}}" required/>
+					</div>
+                    <div class="form-group">
+						<label for="device_temperature">디바이스 온도</label>
+						<input type="text" id="device_temperature" name="device_temperature" class="form-control" value="0" required/>
+					</div>
+					<div class="form-group">
+						<label for="scenario_data_subject">테스트 환경 타이틀</label>
+						<input type="text" id="scenario_data_subject" name="scenario_data_subject" class="form-control" value="{{scenario_data.scenario_data_subject}}" readonly required/>
+					</div>
+					<div class="form-group">
+						<label for="scenario_data_text">테스트 환경의 내용</label>
+						<textarea id="scenario_data_text" name="scenario_data_text" class="form-control" rows="4" style="resize:none" readonly required>{{scenario_data.scenario_data_text}}</textarea>
+					</div>
+					<div class="form-group">
+						<div class="text-right">
+							<button type="submit" class="btn btn-primary">수정하기</button>
+						</div>
+					</div>
+					
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+</div>
+	
+{% include 'bottom_info.html'%}
+
+<script>
+    // 드롭다운 메뉴의 변경 이벤트 리스너 등록
+    $('.dropdown-menu a').on('click', function() {
+        // 선택된 옵션의 텍스트 값
+        var selectedOption = $(this).text();
+        // 선택된 옵션의 값(속성값) - 예를 들어 href 속성값 등
+        var selectedValue = $(this).attr('value');
+        
+        // label 요소의 value 속성을 선택된 옵션의 값으로 설정
+        $('label[for="dropdownMenuButton"]').attr('value', selectedValue);
+        
+        // label 요소의 텍스트를 선택된 옵션으로 변경
+        $('label[for="dropdownMenuButton"]').text(selectedOption);
+    
+        var device_name_inputElement = document.getElementById('device_name');
+        device_name_inputElement.value = selectedOption;
+      });
+      
+    </script>
+</body>
+</html>
+

@@ -19,16 +19,11 @@
 <div class="container" style="margin-top:100px">
 	<div class="card shadow">
 		<div class="card-body">
-			<h4 class="card-title">{{device}}</h4>
-			<div class="form-group">
-				<div class="text-right">
-					<a href="/profile/write_scenario?data_list={{data_list}}" class="btn btn-primary">데이터 추가</a>
-					<a href="/profile/write_scenario?data_list={{data_list}}" class="btn btn-danger">데이터 삭제</a>
-				</div>
-			</div>
+			<h4 class="card-title">{{device_name}}</h4>
 			<table class="table table-hover" id='map_data_list'>
 				<thead>
 					<tr>
+						<th class="text-center d-none d-md-table-cell">NO</th>
 						<th class="text-center d-none d-md-table-cell">테스트 환경</th>
 						<th class="text-center d-none d-md-table-cell">FPS Avg</th>
 						<th class="text-center d-none d-md-table-cell">FPS Min</th>
@@ -37,22 +32,23 @@
 						<th class="text-center d-none d-md-table-cell">tris</th>
 						<th class="text-center d-none d-md-table-cell">Memory (GB)</th>
 						{% comment %} <th class="text-center d-none d-md-table-cell">TEMP (ºC)</th> {% endcomment %}
-						<th class="text-center d-none d-md-table-cell">수정 / 삭제</th>
+						<th class="text-center d-none d-md-table-cell">수정</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for profile in profile_reulst_list%}
+					{% for profile, performance in data_list%}
 					<tr>
+						<td class="text-center d-none d-md-table-cell">{{profile.ordering_number}}</td>
 						<td class="text-center d-none d-md-table-cell">{{profile.scenario_data.scenario_data_subject}}</td>
-						<td class="text-center d-none d-md-table-cell">{{profile.scenario_data.avg_fps}}</td>
-						<td class="text-center d-none d-md-table-cell">{{profile.scenario_data.min_fps}}</td>
-						<td class="text-center d-none d-md-table-cell">{{profile.scenario_data.set_pass_call}}</td>
-						<td class="text-center d-none d-md-table-cell">{{profile.scenario_data.draw_call}}</td>
-						<td class="text-center d-none d-md-table-cell">{{profile.scenario_data.tris}}</td>
-						<td class="text-center d-none d-md-table-cell">{{profile.scenario_data.system_memory}}</td>
-						{% comment %} <td class="text-center d-none d-md-table-cell">0</td> {% endcomment %}
+						<td class="text-center d-none d-md-table-cell">{{performance.avg_fps}}</td>
+						<td class="text-center d-none d-md-table-cell">{{performance.min_fps}}</td>
+						<td class="text-center d-none d-md-table-cell">{{performance.set_pass_call}}</td>
+						<td class="text-center d-none d-md-table-cell">{{performance.draw_call}}</td>
+						<td class="text-center d-none d-md-table-cell">{{performance.tris}}</td>
+						<td class="text-center d-none d-md-table-cell">{{performance.system_memory}}</td>
+						{% comment %} <td class="text-center d-none d-md-table-cell">{{profile.system_memory}}</td> {% endcomment %}
 						<td class="text-center d-none d-md-table-cell">
-							<a href="/profile/scenario_modify?scenario_data_idx={{scenario.scenario_data_idx}}" class="btn btn-info">수정 / 삭제</a>
+							<a href="/profile/profile_result_modify?profile_result_id={{profile.profile_result_id}}" class="btn btn-info">수정</a>
 						</td>
 						
 					</tr>

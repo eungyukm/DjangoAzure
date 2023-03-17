@@ -215,14 +215,6 @@ def scenario_write_result(request):
 
     scenario_model.save()
 
-    device_info = DeviceInfoTable.objects.all()
-    fps_list = [30, 60]
-    for fps in fps_list:
-        for device in device_info:
-            profile_result1 = ProfileResultTable.objects.create(device=device, target_fps=fps, scenario_data=scenario_model)
-            profile_result1.project_name = project_name
-            profile_result1.save()
-
     message = f'''
             <script>
                 alert('저장되었습니다')
@@ -231,7 +223,7 @@ def scenario_write_result(request):
             '''
     return HttpResponse(message)
 
-
+# --------------------------------------------------------------------------------------------------------------------------------------------- 
 # SetPassCall, DrawCall, Tris
 def scenario_main(request):
     device = request.GET['device']
@@ -279,6 +271,7 @@ def scenario_main(request):
 
     return HttpResponse(template.render(render_data, request))
 
+# --------------------------------------------------------------------------------------------------------------------------------------------- 
 def scenario_modify(request):
     # 파라미터 데이터를 추출합니다.
     scenario_data_idx = request.GET['scenario_data_idx']
@@ -294,6 +287,7 @@ def scenario_modify(request):
     }
     return HttpResponse(template.render(render_data, request))
 
+# --------------------------------------------------------------------------------------------------------------------------------------------- 
 def project_scenario_delete(request):
     project_name = request.GET['project_name']
     # 파라미터 데이터를 추출합니다.
@@ -309,6 +303,7 @@ def project_scenario_delete(request):
          '''
     return HttpResponse(message)
 
+# --------------------------------------------------------------------------------------------------------------------------------------------- 
 @csrf_exempt
 def scenario_modify_result(request):
     scenario_data_idx = request.POST['scenario_data_idx']
@@ -345,7 +340,7 @@ def scenario_modify_result(request):
     return HttpResponse(message)
 
 
-
+# --------------------------------------------------------------------------------------------------------------------------------------------- 
 def project_scenario_main(request):
     project_name = request.GET['project_name']
     scenario_list = ScenarioDataTable.objects.filter(project_name=project_name)
@@ -376,6 +371,7 @@ def project_scenario_modify(request):
     }
     return HttpResponse(template.render(render_data, request))
 
+# --------------------------------------------------------------------------------------------------------------------------------------------- 
 @csrf_exempt
 def project_scenario_modify_result(request):
     scenario_data_idx = request.POST['scenario_data_idx']
@@ -409,7 +405,72 @@ def project_scenario_modify_result(request):
             '''
     return HttpResponse(message)
 
+# ---------------------------------------------------------------------------------------------------------------------------------------------
+# 프로파일 결과 입력 관리
+def profile_input_main(request):
+    project_name = request.GET['project_name']
+    scenario_list = ScenarioDataTable.objects.filter(project_name=project_name)
 
+    template = loader.get_template('profile_input_main.html')
+
+    render_data = {
+        'project_name' : project_name,
+        'scenario_list' : scenario_list,
+    }
+
+    return HttpResponse(template.render(render_data, request))
+
+# 프로파일 결과 입력
+def profile_input_write(request):
+    project_name = request.GET['project_name']
+    scenario_data_idx = request.GET['scenario_data_idx']
+    scenario_list = ScenarioDataTable.objects.filter(scenario_data_idx=scenario_data_idx).first()
+    template = loader.get_template('profile_input_write.html')
+    device_info_lit = DeviceInfoTable.objects.all()
+
+    render_data = {
+        'project_name' : project_name,
+        'scenario_list' : scenario_list,
+        'device_info_lit' :device_info_lit,
+    }
+
+    return HttpResponse(template.render(render_data, request))
+
+# 프로파일 결과 저장
+def profile_input_write_result(request):
+    target_fps = request.POST['target_fps']
+    project_name = request.POST['project_name']
+    scenario_data_idx = request.POST['scenario_data_idx'] 
+    device_name = request.POST['device_name']
+    scenario_profile_idx = request.POST['scenario_profile_idx']
+    ordering_number = request.POST['ordering_number']
+    device_temperature = request.POST['device_temperature']
+
+    device_info = DeviceInfoTable.objects.filter(device_name=device_name).first()
+    scenario_data = ScenarioDataTable.objects.get(scenario_data_idx=scenario_data_idx)
+
+    profile_result_table = ProfileResultTable()
+    profile_result_table.project_name = project_name
+    profile_result_table.scenario_data = scenario_data
+    profile_result_table.target_fps = target_fps
+
+    profile_result_table.device = device_info
+    
+    profile_result_table.scenario_profile_idx = scenario_profile_idx
+    profile_result_table.ordering_number = ordering_number
+    profile_result_table.device_temperature = device_temperature
+    profile_result_table.save()
+
+    message = f'''
+            <script>
+                alert('저장되었습니다')
+                location.href = '/profile/profile_input_main?device_id={device_info.device_info_idx}&&project_name={project_name}'
+            </script>
+            '''
+    return HttpResponse(message)
+# ---------------------------------------------------------------------------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------
 # 프로파일의 결과를 출력하는 화면
 def profile_result_main(request):
     project_name = request.GET['project_name']
@@ -421,12 +482,90 @@ def profile_result_main(request):
     device_info_table = DeviceInfoTable.objects.filter(device_info_idx=device_id).first()
     device_name = device_info_table.device_name
 
-    template = loader.get_template('scenario_main.html')
+    profile_performance_idx_list = []
+    for profile_result in profile_reulst_list:
+        profile_performance_idx_list.append(profile_result.scenario_profile_idx)
+
+
+    print('device_id', device_id)
+    print('profile_performance_idx_list ' ,profile_performance_idx_list)
+
+    # 각 시나리오 별 프로파일 결과
+    profile_performance_result_list = []
+
+    for idx in profile_performance_idx_list:
+        if device_id == '1':
+            profile_performance_result_list.append(GalaxyS10ProfileData.objects.filter(profile_idx=idx).first())
+        elif device_id == '2':
+            profile_performance_result_list.append(GalaxyS9ProfileData.objects.filter(profile_idx=idx).first())
+        elif device_id == '3':
+            profile_performance_result_list.append(GalaxyS8ProfileData.objects.filter(profile_idx=idx).first())
+        elif device_id == '4':
+            print('IPhone' , IPhone11ProfileData.objects.filter(profile_idx=idx).first())
+            profile_performance_result_list.append(IPhone11ProfileData.objects.filter(profile_idx=idx).first())
+
+    print('profile_performance_result_list',profile_performance_result_list)
+
+    data_list = zip(profile_reulst_list, profile_performance_result_list)
+
+    template = loader.get_template('profile_result_main.html')
 
     render_data = {
         'project_name' : project_name,
         'device_name' : device_name,
         'profile_reulst_list' : profile_reulst_list,
+        'profile_performance_result_list' : profile_performance_result_list,
+        'data_list' : data_list,
     }
 
     return HttpResponse(template.render(render_data, request))
+
+def profile_result_modify(request):
+    # 파라미터 데이터를 추출합니다.
+    profile_result_id = request.GET['profile_result_id']
+    profile_result_list = ProfileResultTable.objects.filter(profile_result_id=profile_result_id).first()
+    # 디바이스 정보를 가지고 있는 리스트
+    device_info_list = DeviceInfoTable.objects.all()
+    print('device_info_list', device_info_list)
+    device_name = DeviceInfoTable.objects.filter(device_info_idx=profile_result_list.device.device_info_idx).first().device_name
+
+    # 
+    scenario_data = ScenarioDataTable.objects.filter(scenario_data_idx=profile_result_list.scenario_data.scenario_data_idx).first()
+
+    template = loader.get_template('profile_result_modify.html')
+    render_data = {
+        'profile_result_list': profile_result_list,
+        'device_info_list' : device_info_list,
+        'device_name' : device_name,
+        'scenario_data' : scenario_data,
+    }
+    return HttpResponse(template.render(render_data, request))
+
+def profile_result_modify_result(request):
+    profile_result_id = request.POST['profile_result_id']
+    device_temperature = request.POST['device_temperature']
+    ordering_number = request.POST['ordering_number'] 
+    scenario_profile_idx = request.POST['scenario_profile_idx']
+    device_name = request.POST['device_name']
+    project_name = request.POST['project_name']
+    target_fps = request.POST['target_fps']
+
+    device_info = DeviceInfoTable.objects.filter(device_name=device_name).first()
+
+    profile_result_table = ProfileResultTable.objects.filter(profile_result_id=profile_result_id).first()
+    profile_result_table.target_fps = target_fps
+
+    profile_result_table.device = device_info
+    
+    profile_result_table.scenario_profile_idx = scenario_profile_idx
+    profile_result_table.ordering_number = ordering_number
+    profile_result_table.device_temperature = device_temperature
+    profile_result_table.save()
+
+    message = f'''
+            <script>
+                alert('저장되었습니다')
+                location.href = '/profile/profile_result_main?device_id={device_info.device_info_idx}&&project_name={project_name}&&target_fps={target_fps}'
+            </script>
+            '''
+    return HttpResponse(message)

@@ -26,6 +26,13 @@ urlpatterns = [
     path('project_scenario_modify_result', views.project_scenario_modify_result),
     path('project_scenario_delete', views.project_scenario_delete),
 
+    # 프로파일 결과 입력 관리
+    path('profile_input_main', views.profile_input_main),
+    path('profile_input_write', views.profile_input_write),
+    path('profile_input_write_result', views.profile_input_write_result),
+
     # 시나리오 별 프로파일 결과 관리
     path('profile_result_main', views.profile_result_main),
+    path('profile_result_modify', views.profile_result_modify),
+    path('profile_result_modify_result', views.profile_result_modify_result),
 ]
